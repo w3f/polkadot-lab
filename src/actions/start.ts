@@ -1,6 +1,6 @@
 import winston from 'winston';
 
-export async function startAction() {
+export function startAction(): void {
     const logger = winston.createLogger({
         level: 'info',
         format: winston.format.combine(
