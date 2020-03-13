@@ -8,7 +8,10 @@ const yaml = ""
 const network_size = 15
 const network_topology = "line"
 
-function Node(id, topology){
+class Node {
+  node_id: number
+  node_connections: Array<number>;
+  constructor(id: number, topology: string) {
   if (topology == "full") {
     this.node_id = id;
     this.node_connections = Array.from(Array(network_size).keys()).filter(item => item !== id);
