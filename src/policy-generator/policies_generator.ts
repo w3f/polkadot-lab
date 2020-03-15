@@ -64,19 +64,19 @@ class NetworkPolicies {
     this.yaml += this.policies_template({ name: node });
   }
   
-  getPolicy(){
+  get_policy(){
     return this.yaml
   }
 }
 
 test = new NetworkPolicies(10, 'circle');
 console.log("TCIRCLE EST RESULTS")
-console.log(test.getPolicy())
+console.log(test.get_policy())
 
 test = new NetworkPolicies(10, 'line');
 console.log("LINE TEST RESULTS")
-console.log(test.getPolicy())
+console.log(test.get_policy())
 
 test = new NetworkPolicies(10, 'full');
 console.log("FULL GRAPH TEST RESULTS")
-console.log(test.getPolicy())
+console.log(test.get_policy())
