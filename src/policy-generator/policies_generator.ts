@@ -1,6 +1,6 @@
 const Handlebars = require("handlebars");
 
-class NetworkPolicies {
+class NetworkPolicyGenerator {
   constructor(network_size, network_topology) {
     this.network_size = network_size;
     this.network_topology = network_topology;
@@ -69,14 +69,14 @@ class NetworkPolicies {
   }
 }
 
-test = new NetworkPolicies(10, 'circle');
+test = new NetworkPolicyGenerator(10, 'circle');
 console.log("CIRCLE TEST RESULTS")
 console.log(test.get_policy())
 
-test = new NetworkPolicies(10, 'line');
+test = new NetworkPolicyGenerator(10, 'line');
 console.log("LINE TEST RESULTS")
 console.log(test.get_policy())
 
-test = new NetworkPolicies(10, 'full');
+test = new NetworkPolicyGenerator(10, 'full');
 console.log("FULL GRAPH TEST RESULTS")
 console.log(test.get_policy())
