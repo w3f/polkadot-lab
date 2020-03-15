@@ -42,7 +42,7 @@ class NetworkPolicies {
         matchLabels:
           name: pod-{{name}}`);
 
-        this.policies_template = Handlebars.compile(`
+      this.policies_template = Handlebars.compile(`
           - podSelector:
               matchLabels:
                 name: pod-{{name}}`);
