@@ -1,87 +1,82 @@
-var fs = require('fs');
-var util = require('util');
-var log_file = fs.createWriteStream(__dirname + '/network-policie.yaml', {flags : 'a'});
-var log_stdout = process.stdout;
+const Handlebars = require("handlebars");
 
-const nodesArray = []
-const yaml = ""
-const network_size = 15
-const network_topology = "line"
-
-class Node {
-  node_id: number
-  node_connections: Array<number>;
-  constructor(id: number, topology: string) {
-  if (topology == "full") {
-    this.node_id = id;
-    this.node_connections = Array.from(Array(network_size).keys()).filter(item => item !== id);
-  } else if (topology == "line") {
-    this.node_id = id;
-    if (id > 0 && id < network_size-1 ){
-      this.node_connections = [id-1, id+1];
-    } else if (id == 0) {
-      this.node_connections = [1];
-    } else if (id == network_size-1){
-      this.node_connections = [id-1];
+class NetworkPolicies {
+  constructor(network_size, network_topology) {
+    this.network_size = network_size;
+    this.network_topology = network_topology;
+    this.nodesArray = [];
+    this.yaml = "";
+    for (this.i = 0; this.i < this.network_size; this.i++) {
+      this.id = this.i;
+      this.connections = [];
+      if (this.network_topology == "line"){
+        if (this.id > 0 && this.id < this.network_size-1 ){
+          this.connections.push(this.id-1, this.id+1);
+        } else if (this.id == 0) {
+          this.connections.push(1);
+        } else if (this.id == this.network_size-1){
+          this.connections.push(this.id-1);
+        }
+      }
+      else if (this.network_topology == "circle"){
+        if (this.id > 0 && this.id < this.network_size-1 ){
+          this.connections.push(this.id-1, this.id+1);
+        } else if (this.id == 0){
+          this.connections.push(1, this.network_size-1);
+        } else if (this.id == this.network_size-1){
+          this.connections.push(this.id-1, 0);
+        }
+      }
+      else if (this.network_topology == "full"){
+        this.connections = Array.from(Array(this.network_size).keys()).filter(item => item !== this.id);
+      }      
+      this.nodesArray.push({id: this.id, connections: this.connections})
     }
-  } else if (topology == "dense"){
-    this.node_id = id;
+      this.pod_template = Handlebars.compile(`
+  apiVersion: networking.k8s.io/v1
+    kind: NetworkPolicy
+    metadata:
+      name: pod-{{name}}-network-policy
+    spec:
+      podSelector:
+        matchLabels:
+          name: pod-{{name}}`);
 
-  } else if (topology == "sparse"){
-    //  block of code to be executed if the condition1 is false and condition2 is false
+        this.policies_template = Handlebars.compile(`
+          - podSelector:
+              matchLabels:
+                name: pod-{{name}}`);
+
+    this.nodesArray.forEach(element => this.generate_node_entry(element));
+
+  }
+  generate_node_entry(node){
+    this.yaml += this.pod_template({ name: node.id });
+    this.yaml += "\n        ingress:";
+    node.connections.forEach(element => this.generate_node_policies(element));
+    this.yaml += "\n        egress:";
+    node.connections.forEach(element => this.generate_node_policies(element));
+    this.yaml += "\n---";
+
+  }
+
+  generate_node_policies(node){
+    this.yaml += this.policies_template({ name: node });
+  }
+  
+  getPolicy(){
+    return this.yaml
   }
 }
 
-function generate_ingress_template(pod_name){
-  const template = `      - podSelector:
-          matchLabels:
-            name: pod-${pod_name}`
-  return template
-}
+test = new NetworkPolicies(10, 'circle');
+console.log("TCIRCLE EST RESULTS")
+console.log(test.getPolicy())
 
-function generate_egress_template(pod_name){
-  const template = `      - podSelector:
-          matchLabels:
-            name: pod-${pod_name}`
-  return template
-}
+test = new NetworkPolicies(10, 'line');
+console.log("LINE TEST RESULTS")
+console.log(test.getPolicy())
 
-function generate_policies(node){
-  const prefix_template = `apiVersion: networking.k8s.io/v1
-  kind: NetworkPolicy
-  metadata:
-    name: pod-${node.node_id}-network-policy
-  spec:
-    podSelector:
-      matchLabels:
-        name: pod-${node.node_id}
-    ingress:`
-  const post_template = `      ports:
-      - protocol: TCP
-        port: 6379
----`
-
-
-  console.log(prefix_template)
-  node.node_connections.forEach(element => console.log(generate_ingress_template(element)));
-  console.log(`    egress:`)
-  node.node_connections.forEach(element => console.log(generate_egress_template(element)));
-  console.log(`---`)
-  //node.node_connections.forEach(element => log_file.write(util.format(element) + '\n');
-
-}
-
-console.log = function(d) { //
-  log_file.write(util.format(d) + '\n');
-  log_stdout.write(util.format(d) + '\n');
-};
-
-i = 0
-do {
-  var node = new Node(i, network_topology);
-  nodesArray.push(node);
-  i++;
-}
-while (i < network_size);
-
-nodesArray.forEach(element => generate_policies(element));
+test = new NetworkPolicies(10, 'full');
+console.log("FULL GRAPH TEST RESULTS")
+console.log(test.getPolicy())
