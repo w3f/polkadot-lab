@@ -70,7 +70,7 @@ class NetworkPolicies {
 }
 
 test = new NetworkPolicies(10, 'circle');
-console.log("TCIRCLE EST RESULTS")
+console.log("CIRCLE TEST RESULTS")
 console.log(test.get_policy())
 
 test = new NetworkPolicies(10, 'line');
