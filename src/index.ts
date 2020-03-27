@@ -6,7 +6,7 @@ import { startAction } from './actions/start';
 
 program
     .command('start')
-    .description('Starts the accountant.')
+    .description('Starts polkadot-lab.')
     .option('-c, --config [path]', 'Path to config file.', './config/main.yaml')
     .action(startAction);
 
