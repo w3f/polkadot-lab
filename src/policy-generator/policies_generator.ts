@@ -25,6 +25,8 @@ class NetworkPolicies {
         } else if (this.i === this.network_size - 1) {
           this.connections.push(this.i - 1, 0);
         }
+      } else if (this.network_topology === "full"){
+         this.connections = Array.from(Array(this.network_size).keys()).filter(item => item !== this.i);
       }
       let node =  "apiVersion: networking.k8s.io/v1\n" +
                   "kind: NetworkPolicy\n" +
