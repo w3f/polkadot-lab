@@ -26,27 +26,35 @@ class NetworkPolicies {
           this.connections.push(this.i - 1, 0);
         }
       }
-      console.log(this.i, this.connections);
-      let node =  "apiVersion: networking.k8s.io/v1," +
-                  "  kind: NetworkPolicy\n" +
-                  "  metadata:\n" +
-                  "    name: pod-"+this.i+"-network-policy\n" +
-                  "  spec:\n" +
-                  "    podSelector:\n" +
-                  "      matchLabels:\n" +
-                  "        name: pod-"+this.i +"\n";
+      let node =  "apiVersion: networking.k8s.io/v1\n" +
+                  "kind: NetworkPolicy\n" +
+                  "metadata:\n" +
+                  "  name: pod-"+this.i+"-network-policy\n" +
+                  "spec:\n" +
+                  "  podSelector:\n" +
+                  "    matchLabels:\n" +
+                  "      name: pod-"+this.i +"\n";
       let selector = "";
       for(let j=0;j<this.connections.length;j++){
-        selector +=   "      - podSelector:\n" +
-                      "          matchLabels:\n" +
-                      "            name: pod-" + this.connections[j] +"\n";
+        selector +=   "    - podSelector:\n" +
+                      "        matchLabels:\n" +
+                      "          name: pod-" + this.connections[j] +"\n";
       }
-      node += "    ingress:\n"+selector +"    egress:\n"+selector +"---\n";
+      node += "  ingress:\n"+selector +"  egress:\n"+selector +"---\n";
       this.nodesArray.push(node)
     }
   }
+
+  getPolicy(){
+    let result = "";
+    for(let i=0;i<this.nodesArray.length;i++){
+      result+=this.nodesArray[i];
+    }
+    return result;
+    }
+
   savePolicy(filename = this.network_size+"-"+this.network_topology+"-network-policie.yaml"){
-    let result = "";//YAML.safeDump(this.nodesArray);
+    let result = "";
     for(let i=0;i<this.nodesArray.length;i++){
       result+=this.nodesArray[i];
     }
@@ -58,6 +66,4 @@ class NetworkPolicies {
     })
   }
 }
-
-
-
+module.exports = NetworkPolicies

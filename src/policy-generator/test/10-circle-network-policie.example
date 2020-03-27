@@ -1,0 +1,230 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: pod-0-network-policy
+spec:
+  podSelector:
+    matchLabels:
+      name: pod-0
+  ingress:
+    - podSelector:
+        matchLabels:
+          name: pod-9
+    - podSelector:
+        matchLabels:
+          name: pod-1
+  egress:
+    - podSelector:
+        matchLabels:
+          name: pod-9
+    - podSelector:
+        matchLabels:
+          name: pod-1
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: pod-1-network-policy
+spec:
+  podSelector:
+    matchLabels:
+      name: pod-1
+  ingress:
+    - podSelector:
+        matchLabels:
+          name: pod-0
+    - podSelector:
+        matchLabels:
+          name: pod-2
+  egress:
+    - podSelector:
+        matchLabels:
+          name: pod-0
+    - podSelector:
+        matchLabels:
+          name: pod-2
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: pod-2-network-policy
+spec:
+  podSelector:
+    matchLabels:
+      name: pod-2
+  ingress:
+    - podSelector:
+        matchLabels:
+          name: pod-1
+    - podSelector:
+        matchLabels:
+          name: pod-3
+  egress:
+    - podSelector:
+        matchLabels:
+          name: pod-1
+    - podSelector:
+        matchLabels:
+          name: pod-3
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: pod-3-network-policy
+spec:
+  podSelector:
+    matchLabels:
+      name: pod-3
+  ingress:
+    - podSelector:
+        matchLabels:
+          name: pod-2
+    - podSelector:
+        matchLabels:
+          name: pod-4
+  egress:
+    - podSelector:
+        matchLabels:
+          name: pod-2
+    - podSelector:
+        matchLabels:
+          name: pod-4
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: pod-4-network-policy
+spec:
+  podSelector:
+    matchLabels:
+      name: pod-4
+  ingress:
+    - podSelector:
+        matchLabels:
+          name: pod-3
+    - podSelector:
+        matchLabels:
+          name: pod-5
+  egress:
+    - podSelector:
+        matchLabels:
+          name: pod-3
+    - podSelector:
+        matchLabels:
+          name: pod-5
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: pod-5-network-policy
+spec:
+  podSelector:
+    matchLabels:
+      name: pod-5
+  ingress:
+    - podSelector:
+        matchLabels:
+          name: pod-4
+    - podSelector:
+        matchLabels:
+          name: pod-6
+  egress:
+    - podSelector:
+        matchLabels:
+          name: pod-4
+    - podSelector:
+        matchLabels:
+          name: pod-6
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: pod-6-network-policy
+spec:
+  podSelector:
+    matchLabels:
+      name: pod-6
+  ingress:
+    - podSelector:
+        matchLabels:
+          name: pod-5
+    - podSelector:
+        matchLabels:
+          name: pod-7
+  egress:
+    - podSelector:
+        matchLabels:
+          name: pod-5
+    - podSelector:
+        matchLabels:
+          name: pod-7
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: pod-7-network-policy
+spec:
+  podSelector:
+    matchLabels:
+      name: pod-7
+  ingress:
+    - podSelector:
+        matchLabels:
+          name: pod-6
+    - podSelector:
+        matchLabels:
+          name: pod-8
+  egress:
+    - podSelector:
+        matchLabels:
+          name: pod-6
+    - podSelector:
+        matchLabels:
+          name: pod-8
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: pod-8-network-policy
+spec:
+  podSelector:
+    matchLabels:
+      name: pod-8
+  ingress:
+    - podSelector:
+        matchLabels:
+          name: pod-7
+    - podSelector:
+        matchLabels:
+          name: pod-9
+  egress:
+    - podSelector:
+        matchLabels:
+          name: pod-7
+    - podSelector:
+        matchLabels:
+          name: pod-9
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: pod-9-network-policy
+spec:
+  podSelector:
+    matchLabels:
+      name: pod-9
+  ingress:
+    - podSelector:
+        matchLabels:
+          name: pod-8
+    - podSelector:
+        matchLabels:
+          name: pod-0
+  egress:
+    - podSelector:
+        matchLabels:
+          name: pod-8
+    - podSelector:
+        matchLabels:
+          name: pod-0
+---
