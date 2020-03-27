@@ -4,7 +4,7 @@
   "description": "Framework for testing Polkadot networks",
   "repository": "git@github.com:w3f/polkadot-lab.git",
   "author": "W3F Infrastructure Team <devops@web3.foundation>",
-  "license": "Apache2",
+  "license": "Apache-2.0",
   "scripts": {
     "lint": "yarn eslint . --ext .js,.jsx,.ts,.tsx",
     "build": "tsc --build tsconfig.json",
