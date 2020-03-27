@@ -1,82 +1,63 @@
-const Handlebars = require("handlebars");
+const YAML = require('js-yaml');
+const fs   = require('fs');
 
-class NetworkPolicyGenerator {
-  constructor(network_size, network_topology) {
+
+class NetworkPolicies {
+  constructor(network_size=1000, network_topology="circle") {
     this.network_size = network_size;
     this.network_topology = network_topology;
     this.nodesArray = [];
-    this.yaml = "";
     for (this.i = 0; this.i < this.network_size; this.i++) {
-      this.id = this.i;
       this.connections = [];
-      if (this.network_topology == "line"){
-        if (this.id > 0 && this.id < this.network_size-1 ){
-          this.connections.push(this.id-1, this.id+1);
-        } else if (this.id == 0) {
+      if (this.network_topology === "line") {
+        if (this.i > 0 && this.i < this.network_size - 1) {
+          this.connections.push(this.i - 1, this.i + 1);
+        } else if (this.i === 0) {
           this.connections.push(1);
-        } else if (this.id == this.network_size-1){
-          this.connections.push(this.id-1);
+        } else if (this.i === this.network_size - 1) {
+          this.connections.push(this.i - 1);
+        }
+      } else if (this.network_topology === "circle"){
+        if (this.i > 0 && this.i < this.network_size - 1) {
+          this.connections.push(this.i - 1, this.i + 1);
+        } else if (this.i === 0) {
+          this.connections.push(this.network_size-1, 1);
+        } else if (this.i === this.network_size - 1) {
+          this.connections.push(this.i - 1, 0);
         }
       }
-      else if (this.network_topology == "circle"){
-        if (this.id > 0 && this.id < this.network_size-1 ){
-          this.connections.push(this.id-1, this.id+1);
-        } else if (this.id == 0){
-          this.connections.push(1, this.network_size-1);
-        } else if (this.id == this.network_size-1){
-          this.connections.push(this.id-1, 0);
-        }
+      console.log(this.i, this.connections);
+      let node =  "apiVersion: networking.k8s.io/v1," +
+                  "  kind: NetworkPolicy\n" +
+                  "  metadata:\n" +
+                  "    name: pod-"+this.i+"-network-policy\n" +
+                  "  spec:\n" +
+                  "    podSelector:\n" +
+                  "      matchLabels:\n" +
+                  "        name: pod-"+this.i +"\n";
+      let selector = "";
+      for(let j=0;j<this.connections.length;j++){
+        selector +=   "      - podSelector:\n" +
+                      "          matchLabels:\n" +
+                      "            name: pod-" + this.connections[j] +"\n";
       }
-      else if (this.network_topology == "full"){
-        this.connections = Array.from(Array(this.network_size).keys()).filter(item => item !== this.id);
-      }      
-      this.nodesArray.push({id: this.id, connections: this.connections})
+      node += "    ingress:\n"+selector +"    egress:\n"+selector +"---\n";
+      this.nodesArray.push(node)
     }
-      this.pod_template = Handlebars.compile(`
-  apiVersion: networking.k8s.io/v1
-    kind: NetworkPolicy
-    metadata:
-      name: pod-{{name}}-network-policy
-    spec:
-      podSelector:
-        matchLabels:
-          name: pod-{{name}}`);
-
-      this.policies_template = Handlebars.compile(`
-          - podSelector:
-              matchLabels:
-                name: pod-{{name}}`);
-
-    this.nodesArray.forEach(element => this.generate_node_entry(element));
-
   }
-  generate_node_entry(node){
-    this.yaml += this.pod_template({ name: node.id });
-    this.yaml += "\n        ingress:";
-    node.connections.forEach(element => this.generate_node_policies(element));
-    this.yaml += "\n        egress:";
-    node.connections.forEach(element => this.generate_node_policies(element));
-    this.yaml += "\n---";
+  savePolicy(filename = this.network_size+"-"+this.network_topology+"-network-policie.yaml"){
+    let result = "";//YAML.safeDump(this.nodesArray);
+    for(let i=0;i<this.nodesArray.length;i++){
+      result+=this.nodesArray[i];
+    }
 
-  }
-
-  generate_node_policies(node){
-    this.yaml += this.policies_template({ name: node });
-  }
-  
-  get_policy(){
-    return this.yaml
+    console.log(result);
+    fs.writeFileSync(filename, result, function (err, file) {
+      if (err) throw err;
+      console.log("File saved at: "+ filename);
+    })
   }
 }
 
-test = new NetworkPolicyGenerator(10, 'circle');
-console.log("CIRCLE TEST RESULTS")
-console.log(test.get_policy())
 
-test = new NetworkPolicyGenerator(10, 'line');
-console.log("LINE TEST RESULTS")
-console.log(test.get_policy())
 
-test = new NetworkPolicyGenerator(10, 'full');
-console.log("FULL GRAPH TEST RESULTS")
-console.log(test.get_policy())
