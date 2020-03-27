@@ -1,6 +1,8 @@
 import winston from 'winston';
 
-export function createLogger(level: string = 'info') {
+import { Logger } from './types';
+
+export function createLogger(level = 'info'): Logger {
     return winston.createLogger({
         level: level,
         format: winston.format.combine(
