@@ -1,71 +1,87 @@
-const YAML = require('js-yaml');
-const fs   = require('fs');
+const fs   = require('fs-extra');
+const YAML = require('yamljs');
 
+function Policy(size, topology) {
+  this.network_size = size;
+  this.network_topology = topology;
+};
 
-class NetworkPolicies {
-  constructor(network_size=1000, network_topology="circle") {
-    this.network_size = network_size;
-    this.network_topology = network_topology;
-    this.nodesArray = [];
-    for (this.i = 0; this.i < this.network_size; this.i++) {
-      this.connections = [];
-      if (this.network_topology === "line") {
-        if (this.i > 0 && this.i < this.network_size - 1) {
-          this.connections.push(this.i - 1, this.i + 1);
-        } else if (this.i === 0) {
-          this.connections.push(1);
-        } else if (this.i === this.network_size - 1) {
-          this.connections.push(this.i - 1);
+Policy.prototype.generate = function() {
+  let config = {};
+  let policy_name = 'Policy Name';
+  config[policy] = [];
+  for(let i = 0; i < this.network_size; i++){
+    let pod_connections = this.connections(i);
+    let pod_policy = {
+        apiVersion: 'networking.k8s.io/v1',
+        kind: 'NetworkPolicy',
+        metadata: {
+          policyName: {
+            name: 'pod-'+i+'-network-policy'
+          }
+        },
+        spec:{
+          podSelector: {
+            matchLabels: {
+              name: 'pod-'+i
+            }
+          },
+          ingress: {
+            podSelector:{
+              matchLabels: {
+                name: pod_connections
+              }
+            }
+          },
+          egress: {
+            podSelector:{
+              matchLabels: {
+                name: pod_connections
+              }
+            }
+          }
         }
-      } else if (this.network_topology === "circle"){
-        if (this.i > 0 && this.i < this.network_size - 1) {
-          this.connections.push(this.i - 1, this.i + 1);
-        } else if (this.i === 0) {
-          this.connections.push(this.network_size-1, 1);
-        } else if (this.i === this.network_size - 1) {
-          this.connections.push(this.i - 1, 0);
-        }
-      } else if (this.network_topology === "full"){
-         this.connections = Array.from(Array(this.network_size).keys()).filter(item => item !== this.i);
-      }
-      let node =  "apiVersion: networking.k8s.io/v1\n" +
-                  "kind: NetworkPolicy\n" +
-                  "metadata:\n" +
-                  "  name: pod-"+this.i+"-network-policy\n" +
-                  "spec:\n" +
-                  "  podSelector:\n" +
-                  "    matchLabels:\n" +
-                  "      name: pod-"+this.i +"\n";
-      let selector = "";
-      for(let j=0;j<this.connections.length;j++){
-        selector +=   "    - podSelector:\n" +
-                      "        matchLabels:\n" +
-                      "          name: pod-" + this.connections[j] +"\n";
-      }
-      node += "  ingress:\n"+selector +"  egress:\n"+selector +"---\n";
-      this.nodesArray.push(node)
+
+    }
+    config[policy].push(pod_policy);
+  }
+  return YAML.stringify(config, 8);
+};
+
+Policy.prototype.connections = function(i) {
+  let connections = [];
+  if (this.network_topology === "line") {
+    if (i > 0 && i < this.network_size - 1) {
+      connections.push('pod-'+(i - 1),'pod-'+ (i + 1));
+    } else if (i === 0) {
+      connections.push('pod-1');
+    } else if (i === this.network_size - 1) {
+      connections.push('pod-'+(i - 1));
+    }
+  } else if (this.network_topology === "circle"){
+    if (i > 0 && i < this.network_size - 1) {
+      connections.push('pod-'+(i - 1), 'pod-'+(i + 1));
+    } else if (i === 0) {
+      connections.push('pod-'+ (this.network_size-1), 'pod-1');
+    } else if (i === this.network_size - 1) {
+      connections.push('pod-'+(i - 1), 'pod-0');
     }
   }
+  return connections;
+};
 
-  getPolicy(){
-    let result = "";
-    for(let i=0;i<this.nodesArray.length;i++){
-      result+=this.nodesArray[i];
-    }
-    return result;
-    }
-
-  savePolicy(filename = this.network_size+"-"+this.network_topology+"-network-policie.yaml"){
-    let result = "";
-    for(let i=0;i<this.nodesArray.length;i++){
-      result+=this.nodesArray[i];
-    }
-
-    console.log(result);
-    fs.writeFileSync(filename, result, function (err, file) {
+Policy.prototype.savePolicy(filename = this.network_size+"-"+this.network_topology+"-network-policie.yaml"){
+    console.log(config);
+    fs.writeFileSync(filename, config, function (err, file) {
       if (err) throw err;
       console.log("File saved at: "+ filename);
     })
   }
 }
-module.exports = NetworkPolicies
+
+module.exports = Policy;
+
+var policy = new Policy(3, 'circle');
+config = policy.generate();
+console.log(config);
+policy.savePolicy();
