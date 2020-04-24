@@ -70,18 +70,5 @@ Policy.prototype.connections = function(i) {
   return connections;
 };
 
-Policy.prototype.savePolicy(filename = this.network_size+"-"+this.network_topology+"-network-policie.yaml"){
-    console.log(config);
-    fs.writeFileSync(filename, config, function (err, file) {
-      if (err) throw err;
-      console.log("File saved at: "+ filename);
-    })
-  }
-}
 
 module.exports = Policy;
-
-var policy = new Policy(3, 'circle');
-config = policy.generate();
-console.log(config);
-policy.savePolicy();
