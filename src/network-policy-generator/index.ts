@@ -1,4 +1,3 @@
-import fs from 'fs-extra';
 import yaml from 'js-yaml';
 
 export enum Topology {
@@ -7,8 +6,8 @@ export enum Topology {
 }
 
 interface NetworkPolicy {
-  apiVersion: string,
-  kind: string
+  apiVersion: string;
+  kind: string;
 
 }
 
@@ -22,10 +21,10 @@ export class Policy {
       this.generate();
   }
 
-  generate():string{
-    let config = [];
+  generate(): string{
+    const config = [];
     for(let i = 0; i < this.size; i++){
-      let pod_connections = this.connections[i];
+      const podConnections = this.connections[i];
       const podPolicy = {
           apiVersion: 'networking.k8s.io/v1',
           kind: 'NetworkPolicy',
@@ -43,14 +42,14 @@ export class Policy {
             ingress: {
               podSelector:{
                 matchLabels: {
-                  name: pod_connections
+                  name: podConnections
                 }
               }
             },
             egress: {
               podSelector:{
                 matchLabels: {
-                  name: pod_connections
+                  name: podConnections
                 }
               }
             }
@@ -62,7 +61,7 @@ export class Policy {
     return yaml.safeDump(config)
   }
 
-  private initConnections():void{
+  private initConnections(): void{
     this.connections = [];
     for(let i=0; i<this.size; i++){
       this.connections[i] = [];
