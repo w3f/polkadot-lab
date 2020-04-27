@@ -1,7 +1,7 @@
 import fs from 'fs-extra';
 import yaml from 'js-yaml';
 
-enum Topology {
+export enum Topology {
   Line,
   Circle
 }
