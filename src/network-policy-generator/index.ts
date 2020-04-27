@@ -59,7 +59,7 @@ export class Policy {
       }
       config.push(podPolicy);
     }
-    return config.toString();
+    return yaml.safeDump(config)
   }
 
   private initConnections():void{
