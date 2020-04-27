@@ -22,10 +22,10 @@ export class Policy {
   }
 
   generate():string{
-    let config: never[] = [];
+    let config = [];
     for(let i = 0; i < this.size; i++){
       let pod_connections = this.connections[i];
-      let podPolicy = {
+      const podPolicy = {
           apiVersion: 'networking.k8s.io/v1',
           kind: 'NetworkPolicy',
           metadata: {
@@ -58,7 +58,7 @@ export class Policy {
       }
       config.push(podPolicy);
     }
-    return yaml.toString(config);
+    return config.toString();
   }
 
   private initConnections():void{
