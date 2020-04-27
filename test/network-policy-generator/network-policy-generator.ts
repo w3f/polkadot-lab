@@ -8,6 +8,6 @@ describe('Policy Generator', () => {
     it('should read valid yaml', () => {
       const test = new Policy(10, Topology.Line);
       const config = test.generate();
-      console.log(config);
+      config.should.exist;
     });
 });
