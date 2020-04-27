@@ -1,22 +1,25 @@
 version: 2
 
 jobs:
-  yarnTest:
+  lint:
     docker:
-      - image: web3f/ci-commons:v2.0.1
+      - image: node:10.15-alpine
     steps:
       - checkout
-      - setup_remote_docker
+
+      - run: yarn
+
       - run:
-          description: run yarn tests
-          command: yarn test
+          name: Run tests
+          command: |
+            yarn test
 
 
 workflows:
   version: 2
   test_and_deploy:
     jobs:
-      - yarnTest:
+      - lint:
           filters:
             tags:
               only: /.*/
