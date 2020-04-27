@@ -5,12 +5,6 @@ export enum Topology {
   Circle
 }
 
-interface NetworkPolicy {
-  apiVersion: string;
-  kind: string;
-
-}
-
 export class Policy {
     private connections: Array<Array<string>> = [];
   constructor(
