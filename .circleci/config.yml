@@ -1,0 +1,22 @@
+version: 2
+
+jobs:
+  yarnTest:
+    docker:
+      - image: web3f/ci-commons:v2.0.1
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          description: run yarn tests
+          command: yarn test
+
+
+workflows:
+  version: 2
+  test_and_deploy:
+    jobs:
+      - yarnTest:
+          filters:
+            tags:
+              only: /.*/
