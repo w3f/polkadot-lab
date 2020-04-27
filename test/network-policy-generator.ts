@@ -1,4 +1,4 @@
-import { Policy } from '../src/network-policy-generator/index';
+import { Policy } from '../src/network-policy-generator';
 import { should } from 'chai';
 should();
 
