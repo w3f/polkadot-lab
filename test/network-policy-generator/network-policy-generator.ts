@@ -1,6 +1,5 @@
 import { Policy, Topology } from '../../src/network-policy-generator';
 import { should } from 'chai';
-import yaml from 'js-yaml';
 
 should();
 
