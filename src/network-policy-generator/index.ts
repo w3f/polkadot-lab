@@ -12,7 +12,6 @@ export class Policy {
     private topology: Topology
   ) {
       this.initConnections();
-      this.generate();
   }
 
   generate(): string{
