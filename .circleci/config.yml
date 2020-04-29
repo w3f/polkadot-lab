@@ -1,0 +1,25 @@
+version: 2
+
+jobs:
+  test:
+    docker:
+      - image: node:12.16.1-stretch
+    steps:
+      - checkout
+
+      - run: yarn
+
+      - run:
+          name: Run tests
+          command: |
+            yarn test
+
+
+workflows:
+  version: 2
+  test_and_deploy:
+    jobs:
+      - test:
+          filters:
+            tags:
+              only: /.*/
