@@ -1,7 +1,7 @@
 import readline from 'readline';
 import { Config } from '@w3f/config';
-import { InputConfig } from '../types';
 import { createLogger } from '@w3f/logger';
+import { InputConfig } from '../types';
 import { Engine } from '../engine';
 
 export async function startAction(): Promise<void> {
