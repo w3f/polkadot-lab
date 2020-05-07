@@ -1,4 +1,4 @@
-import { Logger } from '../types';
+import { Logger } from '@w3f/logger';
 
 export class Engine {
     constructor(private readonly logger: Logger) { }
