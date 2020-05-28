@@ -1,9 +1,9 @@
 version: 2
 
 jobs:
-  test:
+  unitTest:
     docker:
-      - image: node:12.16.1-stretch
+      - image: web3f/node:v0.1.0
     steps:
       - checkout
 
