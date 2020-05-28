@@ -1,15 +1,22 @@
 {
   "compilerOptions": {
     "esModuleInterop": true,
+    "declaration": true,
     "noImplicitAny": false,
     "module": "commonjs",
     "target": "es6",
     "skipLibCheck": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "exclude": [
-      "node_modules",
-      "**/*.spec.ts"
+    "node_modules",
+    "**/*.spec.ts",
+    "test/**/*",
+    "e2e-test/**/*",
+    "dist/**/*"
   ],
-  "_comment": "The polkadot @util lib contains typescript errors"
+  "_comment": "The Polkadot Lab App contains typescript errors"
 }
