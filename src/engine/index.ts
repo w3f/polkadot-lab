@@ -1,7 +1,9 @@
 import { Logger } from '@w3f/logger';
 
-export class Engine {
-    constructor(private readonly logger: Logger) { }
+import { EngineManager, EngineConfig } from '../types';
+
+export class Engine implements EngineManager {
+    constructor(private readonly cfg: EngineConfig, private readonly logger: Logger) { }
 
     async start(): Promise<void> {
         this.logger.info('Execution engine started');
