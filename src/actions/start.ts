@@ -8,7 +8,12 @@ import { Engine } from '../engine';
 export async function startAction(cmd): Promise<void> {
     const cfg = new Config<InputConfig>().parse(cmd.config);
     const logger = createLogger(cfg.logLevel);
-    const engine = new Engine(cfg, logger);
+
+    const engineCfg = {
+        logger
+    }
+
+    const engine = new Engine(engineCfg);
 
     try {
         await engine.start();
