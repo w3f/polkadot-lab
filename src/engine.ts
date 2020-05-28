@@ -8,6 +8,7 @@ import {
     ResultsManager
 } from './types';
 
+
 export class Engine implements EngineManager {
     private platform: PlatformManager;
     private apps: ApplicationsManager;
@@ -18,6 +19,7 @@ export class Engine implements EngineManager {
         this.platform = cfg.platform;
         this.apps = cfg.apps;
         this.results = cfg.results;
+        this.logger = cfg.logger;
     }
 
     async start(): Promise<void> {
@@ -28,23 +30,13 @@ export class Engine implements EngineManager {
         const kubeconfig = await this.platform.getKubeconfig();
         this.logger.info('Platform created');
 
-        this.apps.setKubeconfig(kubeconfig);
-
-        this.logger.info('Installing dependencies...');
-        await this.apps.installDependencies();
-        this.logger.info('Dependencies installed');
-
-        this.logger.info('Installing nodes...');
-        await this.apps.installNodes();
-        this.logger.info('Nodes installed');
+        this.logger.info('Installing dependencies and nodes...');
+        await this.apps.install(kubeconfig);
+        this.logger.info('Dependencies and nodes installed');
 
         this.logger.info('Executing tests...');
-        await this.results.runTests();
+        const resultData = await this.results.runTests();
         this.logger.info('Tests executed');
-
-        this.logger.info('Writing results...');
-        await this.results.writeResults();
-        this.logger.info('Results written');
     }
 
     async stop(): Promise<void> {
