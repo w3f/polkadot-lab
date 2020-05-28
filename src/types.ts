@@ -1,3 +1,5 @@
+import { Logger } from '@w3f/logger';
+
 export enum Topology {
     Line = 'Line',
     Full = 'Full'
@@ -21,30 +23,30 @@ export interface PlatformManager {
 }
 
 export interface ApplicationsManager {
-    setKubeconfig(kubeconfig: string): void;
-    installDependencies(): Promise<void>;
-    installNodes(): Promise<void>;
+    install(kubeconfig: string): Promise<void>;
 }
+
+export interface ResultData { }
 
 export interface ResultsManager {
-    runTests(): Promise<void>;
-    writeResults(): Promise<void>;
+    runTests(): Promise<ResultData>;
 }
 
-export interface LabConfig {
-    nodes: number;
-    topology: Topology;
-    targetStd: number;
-    metrics: Metrics;
-}
-
-export interface InputConfig extends LabConfig {
+export interface InputConfig {
     logLevel: string;
     maximumExecutionTime: string;
+
+    nodes: number; // platform
+
+    topology: Topology; // apps
+
+    targetStd: number; // results
+    metrics: Metrics; // results
 }
 
-export interface EngineConfig extends LabConfig {
+export interface EngineConfig {
     platform: PlatformManager;
     apps: ApplicationsManager;
     results: ResultsManager;
+    logger: Logger;
 }
