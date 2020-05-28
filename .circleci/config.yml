@@ -6,13 +6,22 @@ jobs:
       - image: web3f/node:v0.1.0
     steps:
       - checkout
-
       - run: yarn
-
       - run:
           name: Run tests
           command: |
             yarn test
+
+  e2eTest:
+    docker:
+      - image: web3f/node:v0.1.0
+    steps:
+      - checkout
+      - run: yarn
+      - run:
+          name: Run tests
+          command: |
+            yarn e2e-test
 
 
 workflows:
@@ -20,6 +29,10 @@ workflows:
   test_and_deploy:
     jobs:
       - unitTest:
+          filters:
+            tags:
+              only: /.*/
+      - e2eTest:
           filters:
             tags:
               only: /.*/
