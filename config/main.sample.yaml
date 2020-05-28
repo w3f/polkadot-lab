@@ -1,0 +1,7 @@
+logLevel: 'info'
+maximumExecutionTime: '60m'
+nodes: 4
+topology: Line
+targetStd: 1.5
+metrics:
+- TimeToFinality
