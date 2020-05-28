@@ -1,6 +1,6 @@
 import yaml from 'js-yaml';
 
-import { Topology } from '../types';
+import { Topology } from './types';
 
 
 export class Policy {

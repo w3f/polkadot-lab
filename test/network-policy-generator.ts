@@ -1,7 +1,7 @@
 import { should } from 'chai';
 
-import { Policy } from '../../src/network-policy-generator';
-import { Topology } from '../../src/types';
+import { Policy } from '../src/network-policy-generator';
+import { Topology } from '../src/types';
 
 should();
 

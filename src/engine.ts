@@ -1,6 +1,6 @@
 import { Logger } from '@w3f/logger';
 
-import { EngineManager, EngineConfig } from '../types';
+import { EngineManager, EngineConfig } from './types';
 
 export class Engine implements EngineManager {
     constructor(private readonly cfg: EngineConfig, private readonly logger: Logger) { }
