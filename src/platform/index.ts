@@ -13,9 +13,11 @@ export class Platform implements PlatformManager {
         private readonly logger: Logger
     ) {
         switch (mode) {
-            default:
+            case ExecutionMode.Local:
                 this.strategy = new LocalPlatform(nodes, logger);
                 break;
+            default:
+                throw new Error(`Execution mode ${mode} not implemented`);
         }
     }
 
