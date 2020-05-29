@@ -2,21 +2,35 @@ import { should } from 'chai';
 import { createLogger } from '@w3f/logger';
 
 import { Engine } from '../src/engine';
-import { Topology, Metric } from '../src/types';
+import {
+    Topology,
+    Metric,
+    ExecutionMode
+} from '../src/types';
+import {
+    PlatformMock,
+    AppsMock,
+    ResultsMock
+} from './mocks'
 
 should();
 
 const logger = createLogger();
+
+const platform = new PlatformMock();
+const apps = new AppsMock();
+const results = new ResultsMock();
+
 const cfg = {
-    nodes: 4,
-    topology: Topology.Line,
-    targetStd: 2,
-    metrics: [Metric.TimeToFinality]
+    platform,
+    apps,
+    results,
+    logger
 }
 
 describe('Engine', () => {
     it('should be instantiable', () => {
-        const engine = new Engine(cfg, logger);
+        const engine = new Engine(cfg);
 
         engine.should.exist;
     });
