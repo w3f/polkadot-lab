@@ -25,10 +25,14 @@ export async function startAction(cmd): Promise<void> {
 
     const engine = new Engine(engineCfg);
 
+    let exitCode = 0;
     try {
         await engine.start();
     } catch (e) {
         logger.error(e);
-        process.exit(1);
+
+        exitCode = 1;
     }
+    await engine.stop();
+    process.exit(exitCode);
 }

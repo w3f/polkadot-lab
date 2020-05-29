@@ -18,7 +18,7 @@ export class LocalPlatform implements PlatformManager {
     async destroy(): Promise<void> {
         await this.init();
 
-        return this.kind.start(ClusterName);
+        return this.kind.stop(ClusterName);
     }
     async getKubeconfig(): Promise<string> {
         await this.init();
