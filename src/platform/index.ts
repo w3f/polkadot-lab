@@ -12,8 +12,10 @@ export class Platform implements PlatformManager {
         private readonly nodes: number,
         private readonly logger: Logger
     ) {
-        if (mode === ExecutionMode.Local) {
-            this.strategy = new LocalPlatform(nodes, logger);
+        switch (mode) {
+            default:
+                this.strategy = new LocalPlatform(nodes, logger);
+                break;
         }
     }
 
