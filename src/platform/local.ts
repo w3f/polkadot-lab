@@ -11,15 +11,19 @@ export class LocalPlatform implements PlatformManager {
     constructor(private readonly logger: Logger) { }
 
     async create(): Promise<void> {
-        this.init();
+        await this.init();
 
         return this.kind.start(ClusterName);
     }
     async destroy(): Promise<void> {
-        return
+        await this.init();
+
+        return this.kind.start(ClusterName);
     }
     async getKubeconfig(): Promise<string> {
-        return
+        await this.init();
+
+        return this.kind.kubeconfig(ClusterName);
     }
 
     private async init(): Promise<void> {
