@@ -32,10 +32,16 @@ export interface ResultsManager {
     runTests(): Promise<ResultData>;
 }
 
+export enum ExecutionMode {
+    Local = 'Local',
+    Remote = 'Remote'
+}
+
 export interface InputConfig {
     logLevel: string;
     maximumExecutionTime: string;
 
+    mode: ExecutionMode; // platform
     nodes: number; // platform
 
     topology: Topology; // apps

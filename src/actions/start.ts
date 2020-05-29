@@ -9,11 +9,15 @@ export async function startAction(cmd): Promise<void> {
     const cfg = new Config<InputConfig>().parse(cmd.config);
     const logger = createLogger(cfg.logLevel);
 
+    const platform = new Platform(cfg.mode, cfg.nodes, logger);
+
     const engineCfg = {
+        platform,
         logger
     }
 
     const engine = new Engine(engineCfg);
+
 
     try {
         await engine.start();
