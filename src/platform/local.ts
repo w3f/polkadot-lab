@@ -1,22 +1,30 @@
 import { Logger } from '@w3f/logger';
+import { Kind } from '@w3f/kind';
 
-import { ExecutionMode, PlatformManager } from '../types';
+import { PlatformManager } from '../types';
+import { ClusterName } from '../constants';
 
 
 export class LocalPlatform implements PlatformManager {
-    constructor(
-        private readonly nodes: number,
-        private readonly logger: Logger
-    ) {
-    }
+    private kind: Kind;
+
+    constructor(private readonly logger: Logger) { }
 
     async create(): Promise<void> {
-        return
+        this.init();
+
+        return this.kind.start(ClusterName);
     }
     async destroy(): Promise<void> {
         return
     }
     async getKubeconfig(): Promise<string> {
         return
+    }
+
+    private async init(): Promise<void> {
+        if (!this.kind) {
+            this.kind = await Kind.create(this.logger);
+        }
     }
 }
