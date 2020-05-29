@@ -5,29 +5,42 @@ import { LocalPlatform } from './local';
 
 
 export class Platform implements PlatformManager {
-    private readonly strategy: PlatformManager;
+    private strategy: PlatformManager;
 
     constructor(
         private readonly mode: ExecutionMode,
         private readonly nodes: number,
         private readonly logger: Logger
     ) {
-        switch (mode) {
-            case ExecutionMode.Local:
-                this.strategy = new LocalPlatform(nodes, logger);
-                break;
-            default:
-                throw new Error(`Execution mode ${mode} not implemented`);
-        }
     }
 
     async create(): Promise<void> {
+        await this.init();
+
         return this.strategy.create();
     }
     async destroy(): Promise<void> {
+        await this.init();
+
         return this.strategy.destroy();
     }
     async getKubeconfig(): Promise<string> {
+        await this.init();
+
         return this.strategy.getKubeconfig();
+    }
+
+    private async init(): Promise<void> {
+        if (!this.strategy) {
+            switch (this.mode) {
+                case ExecutionMode.Local: {
+                    this.strategy = new LocalPlatform(this.logger);
+                    break;
+                }
+                default: {
+                    throw new Error(`Execution mode ${this.mode} not implemented`);
+                }
+            }
+        }
     }
 }
