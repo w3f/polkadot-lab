@@ -9,5 +9,7 @@ export class Apps implements ApplicationsManager {
         private readonly logger: Logger
     ) { }
 
-    async install(kubeconfig: string): Promise<void> { }
+    async install(kubeconfig: string): Promise<void> {
+        return
+    }
 }

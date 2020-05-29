@@ -26,7 +26,7 @@ export interface ApplicationsManager {
     install(kubeconfig: string): Promise<void>;
 }
 
-export interface ResultData { }
+export type ResultData = {}
 
 export interface ResultsManager {
     runTests(): Promise<ResultData>;

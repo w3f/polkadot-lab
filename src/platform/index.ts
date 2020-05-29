@@ -9,8 +9,12 @@ export class Platform implements PlatformManager {
         private readonly nodes: number,
         private readonly logger: Logger) { }
 
-    async create(): Promise<void> { }
-    async destroy(): Promise<void> { }
+    async create(): Promise<void> {
+        return
+    }
+    async destroy(): Promise<void> {
+        return
+    }
     async getKubeconfig(): Promise<string> {
         return
     }
