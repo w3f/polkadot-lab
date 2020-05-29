@@ -14,9 +14,10 @@ jobs:
 
   e2eTest:
     docker:
-      - image: web3f/node:v0.1.0
+      - image: web3f/node-dind:v0.3.0
     steps:
       - checkout
+      - setup_remote_docker
       - run: yarn
       - run:
           name: Run tests
