@@ -3,15 +3,10 @@ import { createLogger } from '@w3f/logger';
 
 import { Engine } from '../src/engine';
 import {
-    Topology,
-    Metric,
-    ExecutionMode
-} from '../src/types';
-import {
     PlatformMock,
     AppsMock,
     ResultsMock
-} from './mocks'
+} from './mocks';
 
 should();
 
