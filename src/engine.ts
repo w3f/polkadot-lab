@@ -40,6 +40,7 @@ export class Engine implements EngineManager {
     }
 
     async stop(): Promise<void> {
+        await this.platform.destroy();
         this.logger.info('Execution engine stopped');
     }
 }
