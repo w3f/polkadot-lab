@@ -214,10 +214,10 @@
     fs-extra "^8.1.0"
     js-yaml "^3.13.1"
 
-"@w3f/kind@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@w3f/kind/-/kind-1.1.1.tgz#5d196f49905c86b56782a0b9538611e16c171930"
-  integrity sha512-0BYh4QLKT7A/7T4o5cu/bFXZdzOS2OZf3aLsDVcDd6Ppohw3TJnKNakAswVpGSWmyySTcfohS9qPrNc4BEvKSA==
+"@w3f/kind@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@w3f/kind/-/kind-1.2.0.tgz#b45502d59501e129a260950840c7907e7776a5a2"
+  integrity sha512-k6KxoEOwprHEDQnV0OcRcFwx+dXaHaEIz72K1gpKYjlf7MWdEijXFn8LqxuXUu4UIPR6/PFlsC5bF4jGTvW9XA==
   dependencies:
     "@kubernetes/client-node" "^0.11.2"
     "@w3f/cmd" "^0.3.0"
