@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@w3f/config": "^0.1.1",
+    "@w3f/helm": "^0.2.0",
     "@w3f/kind": "^1.2.0",
     "@w3f/logger": "^0.3.0",
     "commander": "^4.1.1"
