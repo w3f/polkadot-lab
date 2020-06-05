@@ -66,6 +66,13 @@
   resolved "https://registry.yarnpkg.com/@types/eslint-visitor-keys/-/eslint-visitor-keys-1.0.0.tgz#1ee30d79544ca84d68d4b3cdb0af4f205663dd2d"
   integrity sha512-OCutwjDZ4aFS6PB1UZ988C4YgwlBHJd6wCeQqaLdmadZ/7e+w79+hbMUFC1QXDNCmdyoRfAFdm0RypzwR+Qpag==
 
+"@types/fs-extra@^9.0.1":
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-9.0.1.tgz#91c8fc4c51f6d5dbe44c2ca9ab09310bd00c7918"
+  integrity sha512-B42Sxuaz09MhC3DDeW5kubRcQ5by4iuVQ0cRRWM2lggLzAa/KVom0Aft/208NgMvNQQZ86s5rVcqDdn/SH0/mg==
+  dependencies:
+    "@types/node" "*"
+
 "@types/js-yaml@^3.12.1":
   version "3.12.4"
   resolved "https://registry.yarnpkg.com/@types/js-yaml/-/js-yaml-3.12.4.tgz#7d3b534ec35a0585128e2d332db1403ebe057e25"
@@ -106,10 +113,10 @@
     "@types/tough-cookie" "*"
     form-data "^2.5.0"
 
-"@types/tmp@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@types/tmp/-/tmp-0.1.0.tgz#19cf73a7bcf641965485119726397a096f0049bd"
-  integrity sha512-6IwZ9HzWbCq6XoQWhxLpDjuADodH/MKXRUIDFudvgjcVdjFknvmR+DNsoUeer4XPrEnrZs04Jj+kfV9pFsrhmA==
+"@types/tmp@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@types/tmp/-/tmp-0.2.0.tgz#e3f52b4d7397eaa9193592ef3fdd44dc0af4298c"
+  integrity sha512-flgpHJjntpBAdJD43ShRosQvNC0ME97DCfGvZEDlAThQmnerRXrLbX6YgzRBQCZTthET9eAWFAMaYP0m0Y4HzQ==
 
 "@types/tough-cookie@*":
   version "4.0.0"
@@ -214,10 +221,10 @@
     fs-extra "^8.1.0"
     js-yaml "^3.13.1"
 
-"@w3f/helm@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@w3f/helm/-/helm-0.3.0.tgz#f4d3ffce2c3457c0bd7af3a843b5b4319fe27252"
-  integrity sha512-u92KCYAjxTVPmRKlSfHhr4X2+FTu4KQ4H7ygIWmgZi5rlZJxGaF/XOSRF/yXFP3XekcQTqpT9vk0MPorQMCsUQ==
+"@w3f/helm@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@w3f/helm/-/helm-0.3.1.tgz#ed1d723ff7927752617eaaf9ce4acbcfdefdc875"
+  integrity sha512-TkvZd/Wvwc8nCfLuJcqTR/npeYYI0PdINTE3U1fD/OHczh3tdCQGWNJ4soAb1EaikSugU/9GPMJPAtsag9lWtA==
   dependencies:
     "@w3f/cmd" "^0.3.0"
     "@w3f/logger" "^0.3.0"
@@ -239,6 +246,13 @@
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@w3f/logger/-/logger-0.3.0.tgz#2d79e5705675c62bd1a593843546dd93eef5af17"
   integrity sha512-wC9PMIxwBQKVx7Bn+1XjANlrKOuj31iXYMepCm9BiMCzTpO4ylZFYE4kNi8iYdrubPeQpFoIOV15rhsDFa1v7g==
+  dependencies:
+    winston "^3.2.1"
+
+"@w3f/logger@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@w3f/logger/-/logger-0.4.0.tgz#f4d09c57a579243d77059c2f42282dbc1f52af69"
+  integrity sha512-moUzLBzI+/QyKXOuMOoMrmRGWoqu7KrXuYg1DZFaAW3euN6hBWRJjNNHzkEUOQZkgaLiw5ebmeQLOJyKyCsiuw==
   dependencies:
     winston "^3.2.1"
 
