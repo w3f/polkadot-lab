@@ -1,0 +1,47 @@
+defaultRules:
+  create: false
+kubeDns:
+  enabled: false
+coreDns:
+  enabled: false
+kubeApiServer:
+  enabled: false
+grafana:
+  enabled: false
+nodeExporter:
+  enabled: false
+alertManager:
+  enabled: false
+kubeControllerManager:
+  enabled: false
+kubeEtcd:
+  enabled: false
+kubelet:
+  enabled: false
+kueScheduler:
+  enabled: false
+prometheus:
+  prometheusSpec:
+    resources:
+      requests:
+        cpu: 500m
+        memory: 2Gi
+      limits:
+        cpu: 700m
+        memory: 3Gi
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 20Gi
+
+prometheusOperator:
+  resources:
+    limits:
+      cpu: 200m
+      memory: 200Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
