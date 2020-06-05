@@ -19,7 +19,8 @@
     "@w3f/helm": "^0.3.1",
     "@w3f/kind": "^1.2.0",
     "@w3f/logger": "^0.4.0",
-    "commander": "^4.1.1"
+    "commander": "^4.1.1",
+    "tmp": "^0.2.1"
   },
   "devDependencies": {
     "@types/chai": "^4.2.9",
@@ -34,7 +35,6 @@
     "eslint": "^6.8.0",
     "fs-extra": "^9.0.0",
     "mocha": "^7.0.0",
-    "tmp": "^0.2.1",
     "ts-node": "^8.6.2",
     "typescript": "^3.8.2"
   }
