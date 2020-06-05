@@ -1,4 +1,6 @@
 import { Logger } from '@w3f/logger';
+import fs from 'fs-extra';
+import tmp from 'tmp';
 
 import {
     ApplicationsManager,
@@ -27,11 +29,15 @@ export class Engine implements EngineManager {
 
         this.logger.info('Creating platform...');
         await this.platform.create();
-        const kubeconfig = await this.platform.getKubeconfig();
+        const kubeconfigContent = await this.platform.getKubeconfig();
         this.logger.info('Platform created');
 
+        const tmpobj = tmp.fileSync();
+        const kubeconfigPath = tmpobj.name;
+        fs.writeFileSync(kubeconfigPath, kubeconfigContent);
+
         this.logger.info('Installing dependencies and nodes...');
-        await this.apps.install(kubeconfig);
+        await this.apps.install(kubeconfigPath);
         this.logger.info('Dependencies and nodes installed');
 
         this.logger.info('Executing tests...');
