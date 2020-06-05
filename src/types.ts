@@ -37,6 +37,10 @@ export enum ExecutionMode {
     Remote = 'Remote'
 }
 
+export interface Dependencies {
+    [name: string]: string;
+}
+
 export interface InputConfig {
     logLevel: string;
     maximumExecutionTime: string;
@@ -45,6 +49,7 @@ export interface InputConfig {
     nodes: number; // platform
 
     topology: Topology; // apps
+    dependencies?: Dependencies; // apps
 
     targetStd: number; // results
     metrics: Metrics; // results
