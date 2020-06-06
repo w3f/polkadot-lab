@@ -36,7 +36,7 @@ export class Apps implements ApplicationsManager {
     private async installDependencies(): Promise<void> {
         await this.installPrometheus();
 
-        // install network-policy
+        await this.installNetworkPolicy();
     }
 
     private async installNodes(): Promise<void> {
@@ -62,5 +62,9 @@ export class Apps implements ApplicationsManager {
             chartCfg.version = this.dependencies['prometheus-operator'];
         }
         await this.helm.install(chartCfg);
+    }
+
+    private async installNetworkPolicy(): Promise<void> {
+        return
     }
 }

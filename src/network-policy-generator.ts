@@ -53,28 +53,21 @@ export class Policy {
     }
 
     private initConnections(): void {
-        this.connections = [];
         for (let i = 0; i < this.size; i++) {
             this.connections[i] = [];
-            if (this.topology === Topology.Line) {
-                if (i > 0 && i < this.size - 1) {
-                    this.connections[i].push('pod-' + (i - 1), 'pod-' + (i + 1));
-                } else if (i === 0) {
-                    this.connections[i].push('pod-1');
-                } else if (i === this.size - 1) {
-                    this.connections[i].push('pod-' + (i - 1));
+            if (i > 0 && i < this.size - 1) {
+                this.connections[i].push('pod-' + (i - 1), 'pod-' + (i + 1));
+            } else if (i === 0) {
+                this.connections[i].push('pod-1');
+                if (this.topology === Topology.Full) {
+                    this.connections[i].push('pod-' + (this.size - 1));
                 }
-            } else if (this.topology === Topology.Full) {
-                if (i > 0 && i < this.size - 1) {
-                    this.connections[i].push('pod-' + (i - 1), 'pod-' + (i + 1));
-                } else if (i === 0) {
-                    this.connections[i].push('pod-' + (this.size - 1), 'pod-1');
-                } else if (i === this.size - 1) {
-                    this.connections[i].push('pod-' + (i - 1), 'pod-0');
+            } else { // i === this.size - 1
+                this.connections[i].push('pod-' + (i - 1));
+                if (this.topology === Topology.Full) {
+                    this.connections[i].push('pod-0');
                 }
             }
-
         }
     }
-
 }
