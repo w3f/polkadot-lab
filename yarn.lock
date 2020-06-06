@@ -221,10 +221,10 @@
     fs-extra "^8.1.0"
     js-yaml "^3.13.1"
 
-"@w3f/helm@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@w3f/helm/-/helm-0.3.1.tgz#ed1d723ff7927752617eaaf9ce4acbcfdefdc875"
-  integrity sha512-TkvZd/Wvwc8nCfLuJcqTR/npeYYI0PdINTE3U1fD/OHczh3tdCQGWNJ4soAb1EaikSugU/9GPMJPAtsag9lWtA==
+"@w3f/helm@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@w3f/helm/-/helm-0.4.0.tgz#504b10e06516c173d8b21b7c7c754b63b9a1fc1f"
+  integrity sha512-90Z04BXYq5Y6WrKRV6iVeAdXngNWGNesKygpy0z+bvH71P4YGC5mmblBm5KxT4PPnwWKNuMe8ntJ20OoUKciDQ==
   dependencies:
     "@w3f/cmd" "^0.3.0"
     "@w3f/logger" "^0.3.0"
