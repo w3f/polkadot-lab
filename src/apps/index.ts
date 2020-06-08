@@ -14,6 +14,7 @@ export class Apps implements ApplicationsManager {
 
     constructor(
         private readonly topology: Topology,
+        private readonly size: number,
         private readonly dependencies: Dependencies,
         private readonly logger: Logger
     ) { }
@@ -31,6 +32,12 @@ export class Apps implements ApplicationsManager {
             return
         }
         this.helm = await Helm.create(kubeconfig, this.logger);
+        await this.helm.addRepos([
+            {
+                name: 'w3f',
+                url: 'https://w3f.github.io/helm-charts'
+            }
+        ]);
     }
 
     private async installDependencies(): Promise<void> {
@@ -46,25 +53,37 @@ export class Apps implements ApplicationsManager {
     }
 
     private async installPrometheus(): Promise<void> {
-        const valuesTemplatePath = path.join(__dirname, 'values', 'prometheus-operator.yaml');
-        const valuesTemplate = {
-            path: valuesTemplatePath,
-            data: {}
-        }
         const chartCfg: ChartConfig = {
             name: 'prometheus-operator',
             chart: 'stable/prometheus-operator',
-            wait: true,
-            valuesTemplate
+            wait: true
         };
-        if (this.dependencies &&
-            this.dependencies['prometheus-operator']) {
-            chartCfg.version = this.dependencies['prometheus-operator'];
-        }
-        await this.helm.install(chartCfg);
+        await this.installChart(chartCfg);
     }
 
     private async installNetworkPolicy(): Promise<void> {
-        return
+        const data = {
+            topology: this.topology,
+            size: this.size
+        };
+        const chartCfg: ChartConfig = {
+            name: 'network-policy',
+            chart: 'w3f/network-policy',
+            wait: true
+        };
+        await this.installChart(chartCfg, data);
+    }
+    private async installChart(chartCfg: ChartConfig, data: any = {}): Promise<void> {
+        const valuesTemplatePath = path.join(__dirname, 'values', `${chartCfg.name}.yaml`);
+        const valuesTemplate = {
+            path: valuesTemplatePath,
+            data
+        };
+        chartCfg.valuesTemplate = valuesTemplate;
+        if (this.dependencies &&
+            this.dependencies[chartCfg.name]) {
+            chartCfg.version = this.dependencies[chartCfg.name];
+        }
+        await this.helm.install(chartCfg);
     }
 }
