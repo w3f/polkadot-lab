@@ -1,0 +1,5 @@
+topology: {{ topology }}
+size: {{ size }}
+labelSelector:
+  key: node
+  valuePrefix: "polkadot"
