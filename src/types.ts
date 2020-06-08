@@ -46,7 +46,7 @@ export interface InputConfig {
     maximumExecutionTime: string;
 
     mode: ExecutionMode; // platform
-    nodes: number; // platform
+    size: number; // platform, apps
 
     topology: Topology; // apps
     dependencies?: Dependencies; // apps
