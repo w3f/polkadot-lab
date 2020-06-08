@@ -1,6 +1,6 @@
 import { should } from 'chai';
-import fs from 'fs-extra';
-import tmp from 'tmp';
+import * as fs from 'fs-extra';
+import * as tmp from 'tmp';
 
 import { startAction } from '../src/actions/start';
 
@@ -12,7 +12,7 @@ describe('E2E', () => {
 logLevel: 'info'
 maximumExecutionTime: '60m'
 mode: Local
-nodes: 4
+size: 4
 topology: Line
 targetStd: 1.5
 metrics:
