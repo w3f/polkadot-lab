@@ -1,8 +1,9 @@
 import { Logger } from '@w3f/logger';
 
 export enum Topology {
-    Line = 'Line',
-    Full = 'Full'
+    Line = 'line',
+    Circle = 'circle',
+    Full = 'full'
 }
 
 export enum Metric {
@@ -33,8 +34,8 @@ export interface ResultsManager {
 }
 
 export enum ExecutionMode {
-    Local = 'Local',
-    Remote = 'Remote'
+    Local = 'local',
+    Remote = 'remote'
 }
 
 export interface Dependencies {

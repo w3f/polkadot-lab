@@ -11,9 +11,9 @@ describe('E2E', () => {
         const cfgContent = `
 logLevel: 'info'
 maximumExecutionTime: '60m'
-mode: Local
+mode: local
 size: 4
-topology: Line
+topology: line
 targetStd: 1.5
 metrics:
 - TimeToFinality
