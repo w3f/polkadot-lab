@@ -1,0 +1,13 @@
+name: {{ name }}
+deploymentName: {{ deploymentName }}
+
+local: false
+
+monitoring: false
+benchmark: true
+
+includeValidatorBootNode: false
+
+createCertIssuer: false
+
+createBootNodeService: false
