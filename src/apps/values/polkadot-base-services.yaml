@@ -1,5 +1,5 @@
-name: {{ name }}
-deploymentName: {{ deploymentName }}
+name: polkadot-base-services
+deploymentName: polkadot-lab
 
 local: false
 
