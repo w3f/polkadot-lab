@@ -1,8 +1,11 @@
 import { Logger } from '@w3f/logger';
+import { ChartConfig } from '@w3f/helm';
+
 
 export enum Topology {
-    Line = 'Line',
-    Full = 'Full'
+    Line = 'line',
+    Circle = 'circle',
+    Full = 'full'
 }
 
 export enum Metric {
@@ -33,8 +36,22 @@ export interface ResultsManager {
 }
 
 export enum ExecutionMode {
-    Local = 'Local',
-    Remote = 'Remote'
+    Local = 'local',
+    Remote = 'remote'
+}
+
+export interface Image {
+    repo?: string;
+    tag?: string;
+}
+
+export interface Dependency {
+    image?: Image;
+    chart?: string;
+}
+
+export interface Dependencies {
+    [name: string]: Dependency;
 }
 
 export interface InputConfig {
@@ -42,9 +59,10 @@ export interface InputConfig {
     maximumExecutionTime: string;
 
     mode: ExecutionMode; // platform
-    nodes: number; // platform
+    size: number; // platform, apps
 
     topology: Topology; // apps
+    dependencies?: Dependencies; // apps
 
     targetStd: number; // results
     metrics: Metrics; // results
@@ -55,4 +73,9 @@ export interface EngineConfig {
     apps: ApplicationsManager;
     results: ResultsManager;
     logger: Logger;
+}
+
+export interface ChartManager {
+    cfg(): Promise<ChartConfig>;
+    data(): Promise<any>;
 }

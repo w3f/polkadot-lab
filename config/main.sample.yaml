@@ -1,8 +1,14 @@
 logLevel: 'info'
 maximumExecutionTime: '60m'
 mode: Local
-nodes: 4
+size: 4
 topology: Line
 targetStd: 1.5
 metrics:
 - TimeToFinality
+dependencies:
+  w3f/polkadot:
+    image:
+      repo: 'parity/polkadot'
+      tag: 'v0.8.7'
+    chart: 'v0.27.2'
