@@ -6,3 +6,9 @@ topology: Line
 targetStd: 1.5
 metrics:
 - TimeToFinality
+dependencies:
+  polkadot:
+    image:
+      repo: 'parity/polkadot'
+      tag: 'v0.8.7'
+    chart: 'v0.27.2'

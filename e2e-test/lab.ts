@@ -17,6 +17,11 @@ topology: line
 targetStd: 1.5
 metrics:
 - TimeToFinality
+dependencies:
+  polkadot:
+    image:
+      repo: 'parity/polkadot'
+      tag: 'v0.8.7'
 `;
         const cfgFile = tmp.fileSync();
         fs.writeSync(cfgFile.fd, cfgContent);
