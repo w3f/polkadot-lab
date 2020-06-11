@@ -21,7 +21,7 @@
   ],
   "dependencies": {
     "@w3f/config": "^0.1.1",
-    "@w3f/crypto": "^0.2.0",
+    "@w3f/crypto": "^0.3.0",
     "@w3f/helm": "^0.5.0",
     "@w3f/kind": "^1.2.0",
     "@w3f/logger": "^0.4.0",

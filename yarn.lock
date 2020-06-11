@@ -268,10 +268,10 @@
   dependencies:
     "@w3f/files" "^0.1.3"
 
-"@w3f/crypto@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@w3f/crypto/-/crypto-0.2.0.tgz#8adb9bba4ae9a06db0a562e42f7505e35ae0dfb2"
-  integrity sha512-Hl4R5/BpFlcfHOhHF3VAQdDEZcNvcMKGRCq5z/lItn49giEMaaEkOtg4Pl/fqaztl5a9N8cBzbU4IOPvJLY+Lg==
+"@w3f/crypto@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@w3f/crypto/-/crypto-0.3.0.tgz#87146f503a26216c1b675b8856f01c80e42b0b43"
+  integrity sha512-iJP439fHplvHVX4KoVY7w6z2EFymmdPFJPxVDsWhvGSNNxWpEb5x6rLKyfKdFjiLrGrRJheipTfePEOVQwzCtQ==
   dependencies:
     "@polkadot/keyring" "2.13.1"
     "@polkadot/util" "2.13.1"
