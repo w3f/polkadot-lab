@@ -9,11 +9,11 @@ chainspec:
   addresses:
     stash: [{{ chainspecStashAddresses }}]
     controller: [{{ chainspecControllerAddresses }}]
-    session_audi: {{ chainspecAudiAddresses }}
-    session_babe: {{ chainspecBabeAddresses }}
-    session_grandpa: {{ chainspecGranAddresses }}
-    session_imonline: {{ chainspecImonAddresses }}
-    session_parachain: {{ chainspecParaAddresses }}
+    session_audi: [{{ chainspecAudiAddresses }}]
+    session_babe: [{{ chainspecBabeAddresses }}]
+    session_grandpa: [{{ chainspecGranAddresses }}]
+    session_imonline: [{{ chainspecImonAddresses }}]
+    session_parachain: [{{ chainspecParaAddresses }}]
 
 keys:
   session_grandpa: {{ granSessionSeed }}
@@ -22,7 +22,7 @@ keys:
   session_parachain: {{ paraSessionSeed }}
   session_audi: {{ audiSessionSeed }}
 
-createConfigMap: true
+createConfigMap: {{ createConfigMap }}
 
 persistence:
   enabled: true
@@ -31,3 +31,5 @@ persistence:
   accessModes: [ "ReadWriteOnce" ]
 
 monitoring: true
+
+p2pPort: {{ p2pPort }}
