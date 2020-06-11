@@ -1,4 +1,6 @@
 import { Logger } from '@w3f/logger';
+import { ChartConfig } from '@w3f/helm';
+
 
 export enum Topology {
     Line = 'line',
@@ -71,4 +73,9 @@ export interface EngineConfig {
     apps: ApplicationsManager;
     results: ResultsManager;
     logger: Logger;
+}
+
+export interface ChartManager {
+    cfg(): Promise<ChartConfig>;
+    data(): Promise<any>;
 }
