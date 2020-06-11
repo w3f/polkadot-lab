@@ -1,27 +1,31 @@
 image:
-  repo: parity/polkadot
-  tag: {{ tag }}
+  repo: {{ image.repo }}
+  tag: {{ image.tag }}
 
 name: {{ name }}
 deploymentName: polkadot-lab
 
 chainspec:
   addresses:
-    session: {{ chainspecSessionAddresses }}
-    stash: {{ chainspecStashAddresses }}
-    controller: {{ chainspecControllerAddresses }}
+    stash: [{{ chainspecStashAddresses }}]
+    controller: [{{ chainspecControllerAddresses }}]
+    session_audi: {{ chainspecAudiAddresses }}
+    session_babe: {{ chainspecBabeAddresses }}
+    session_grandpa: {{ chainspecGranAddresses }}
+    session_imonline: {{ chainspecImonAddresses }}
+    session_parachain: {{ chainspecParaAddresses }}
 
 keys:
-  session_grandpa: {{ granSessionSeeed }}
+  session_grandpa: {{ granSessionSeed }}
   session_babe: {{ babeSessionSeed }}
   session_imonline: {{ imonSessionSeed }}
   session_parachain: {{ paraSessionSeed }}
   session_audi: {{ audiSessionSeed }}
 
-createConfigMap: false
+createConfigMap: true
 
 persistence:
-  enabled: false
+  enabled: true
   dataSize: 1Gi
   chainspecSize: 1Gi
   accessModes: [ "ReadWriteOnce" ]
