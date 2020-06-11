@@ -51,7 +51,7 @@ export class Apps implements ApplicationsManager {
 
     private async installDependencies(): Promise<void> {
         const chartTypes = [PrometheusOperatorChart, NetworkPolicyChart, PolkadotBaseServicesChart];
-        for (let chartType of chartTypes) {
+        for (const chartType of chartTypes) {
             const chart = new chartType(this.topology, this.size, this.dependencies, this.logger);
             await this.installChart(chart);
         }
