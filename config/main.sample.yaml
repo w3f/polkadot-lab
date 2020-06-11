@@ -7,7 +7,7 @@ targetStd: 1.5
 metrics:
 - TimeToFinality
 dependencies:
-  polkadot:
+  w3f/polkadot:
     image:
       repo: 'parity/polkadot'
       tag: 'v0.8.7'
