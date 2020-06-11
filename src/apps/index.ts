@@ -36,6 +36,10 @@ export class Apps implements ApplicationsManager {
                 {
                     name: 'w3f',
                     url: 'https://w3f.github.io/helm-charts'
+                },
+                {
+                    name: 'stable',
+                    url: 'https://kubernetes-charts.storage.googleapis.com/'
                 }
             ]);
         }
