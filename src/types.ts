@@ -38,8 +38,18 @@ export enum ExecutionMode {
     Remote = 'remote'
 }
 
+export interface Image {
+    repo?: string;
+    tag?: string;
+}
+
+export interface Dependency {
+    image?: Image;
+    chart?: string;
+}
+
 export interface Dependencies {
-    [name: string]: string;
+    [name: string]: Dependency;
 }
 
 export interface InputConfig {
