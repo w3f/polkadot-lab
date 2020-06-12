@@ -8,11 +8,12 @@ export enum Topology {
     Full = 'full'
 }
 
-export enum Metric {
+export enum TestCase {
+    NumberOfPeers = 'NumberOfPeers',
     TimeToFinality = 'TimeToFinality'
 }
 
-export type Metrics = Array<Metric>;
+export type TestCases = Array<TestCase>;
 
 export interface EngineManager {
     start(): Promise<void>;
@@ -32,7 +33,7 @@ export interface ApplicationsManager {
 export type ResultData = {}
 
 export interface ResultsManager {
-    runTests(): Promise<ResultData>;
+    runTestCases(): Promise<ResultData>;
 }
 
 export enum ExecutionMode {
@@ -65,7 +66,7 @@ export interface InputConfig {
     dependencies?: Dependencies; // apps
 
     targetStd: number; // results
-    metrics: Metrics; // results
+    testCases: TestCases; // results
 }
 
 export interface EngineConfig {

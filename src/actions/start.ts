@@ -14,7 +14,7 @@ export async function startAction(cmd): Promise<void> {
 
     const platform = new Platform(cfg.mode, cfg.size, logger);
     const apps = new Apps(cfg.topology, cfg.size, cfg.dependencies, logger);
-    const results = new Results(cfg.targetStd, cfg.metrics, logger);
+    const results = new Results(cfg.targetStd, cfg.testCases, logger);
 
     const engineCfg = {
         platform,

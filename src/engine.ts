@@ -40,8 +40,8 @@ export class Engine implements EngineManager {
         await this.apps.install(kubeconfigPath);
         this.logger.info('Dependencies and nodes installed');
 
-        this.logger.info('Executing tests...');
-        const resultData = await this.results.runTests();
+        this.logger.info('Executing test cases...');
+        const resultData = await this.results.runTestCases();
         this.logger.info('Tests executed');
     }
 
