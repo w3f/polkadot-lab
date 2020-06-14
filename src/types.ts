@@ -1,5 +1,6 @@
 import { Logger } from '@w3f/logger';
 import { ChartConfig } from '@w3f/helm';
+import { TestCaseInputConfig } from '@w3f/polkadot-lab-types';
 
 
 export enum Topology {
@@ -8,9 +9,9 @@ export enum Topology {
     Full = 'full'
 }
 
-export enum TestCase {
-    NumberOfPeers = 'NumberOfPeers',
-    TimeToFinality = 'TimeToFinality'
+export interface TestCase {
+    name: string;
+    config: TestCaseInputConfig;
 }
 
 export type TestCases = Array<TestCase>;
