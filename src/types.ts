@@ -9,12 +9,12 @@ export enum Topology {
     Full = 'full'
 }
 
-export interface TestCase {
+export interface TestCaseDefinition {
     name: string;
     config: TestCaseInputConfig;
 }
 
-export type TestCases = Array<TestCase>;
+export type TestCaseDefinitions = Array<TestCaseDefinition>;
 
 export interface EngineManager {
     start(): Promise<void>;
@@ -67,7 +67,7 @@ export interface InputConfig {
     dependencies?: Dependencies; // apps
 
     targetStd: number; // results
-    testCases: TestCases; // results
+    testCases: TestCaseDefinitions; // results
 }
 
 export interface EngineConfig {
