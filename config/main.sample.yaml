@@ -4,11 +4,11 @@ mode: Local
 size: 4
 topology: Line
 targetStd: 1.5
-metrics:
-- TimeToFinality
+testCases:
+- NumberOfPeers
 dependencies:
   w3f/polkadot:
     image:
       repo: 'parity/polkadot'
-      tag: 'v0.8.7'
-    chart: 'v0.27.2'
+      tag: 'v0.8.12'
+    chart: 'v0.27.3'

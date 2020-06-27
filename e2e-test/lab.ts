@@ -15,13 +15,13 @@ mode: local
 size: 4
 topology: line
 targetStd: 1.5
-metrics:
-- TimeToFinality
+testCases:
+- NumberOfPeers
 dependencies:
   w3f/polkadot:
     image:
       repo: 'parity/polkadot'
-      tag: 'v0.8.7'
+      tag: 'v0.8.12'
 `;
         const cfgFile = tmp.fileSync();
         fs.writeSync(cfgFile.fd, cfgContent);
