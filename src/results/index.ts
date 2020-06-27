@@ -1,6 +1,7 @@
 import { Logger } from '@w3f/logger';
+import { LabResult } from '@w3f/polkadot-lab-types';
 
-import { ResultData, ResultsManager, TestCaseDefinitions } from '../types';
+import { ResultsManager, TestCaseDefinitions } from '../types';
 
 
 export class Results implements ResultsManager {
@@ -10,7 +11,7 @@ export class Results implements ResultsManager {
         private readonly logger: Logger
     ) { }
 
-    async runTestCases(): Promise<ResultData> {
+    async runTestCases(): Promise<LabResult> {
         return
     }
 }

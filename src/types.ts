@@ -1,6 +1,6 @@
 import { Logger } from '@w3f/logger';
 import { ChartConfig } from '@w3f/helm';
-import { TestCaseInputConfig } from '@w3f/polkadot-lab-types';
+import { LabResult, TestCaseInputConfig } from '@w3f/polkadot-lab-types';
 
 
 export enum Topology {
@@ -31,10 +31,8 @@ export interface ApplicationsManager {
     install(kubeconfig: string): Promise<void>;
 }
 
-export type ResultData = {}
-
 export interface ResultsManager {
-    runTestCases(): Promise<ResultData>;
+    runTestCases(): Promise<LabResult>;
 }
 
 export enum ExecutionMode {
