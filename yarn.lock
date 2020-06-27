@@ -330,10 +330,10 @@
   dependencies:
     winston "^3.2.1"
 
-"@w3f/polkadot-lab-types@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@w3f/polkadot-lab-types/-/polkadot-lab-types-0.4.0.tgz#aaa9b18b5bf207037f2c266ca0c4a1ea498bad3e"
-  integrity sha512-5YU4e7hATVzf3JbZHaDqwcTbGVUx6ypgkcuZyMj4A7P7PirHd1LMw4WCfnGhGFRsHfjjpYFY2zVZjk3qiDZBzg==
+"@w3f/polkadot-lab-types@^0.10.1":
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/@w3f/polkadot-lab-types/-/polkadot-lab-types-0.10.1.tgz#5d15a28e8149607893a61b47a38ba836adac4c0c"
+  integrity sha512-WV8NUT3/GL285+P2Vfx9u06heOIWNI+6QgoniBq5E2+nqJLrlmiGX6/tuqJtArHFn4xevgyeMwNz+0w+tiBbqQ==
 
 "@w3f/template@^0.4.0":
   version "0.4.0"
