@@ -32,7 +32,7 @@ export interface ApplicationsManager {
 }
 
 export interface ResultsManager {
-    runTestCases(): Promise<LabResult>;
+    runTestCases(): Promise<Array<LabResult>>;
 }
 
 export enum ExecutionMode {

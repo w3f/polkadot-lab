@@ -11,7 +11,16 @@ export class Results implements ResultsManager {
         private readonly logger: Logger
     ) { }
 
-    async runTestCases(): Promise<LabResult> {
+    async runTestCases(): Promise<Array<LabResult>> {
+        const result: Array<Promise<LabResult>> = [];
+        for (let i = 0; i < this.testCases.length; i++) {
+            const testCaseResult = this.runTestCase(i);
+            result.push(testCaseResult);
+        }
+        return Promise.all(result);
+    }
+
+    private async runTestCase(order: number): Promise<LabResult> {
         return
     }
 }
