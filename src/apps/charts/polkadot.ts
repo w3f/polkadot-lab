@@ -2,7 +2,8 @@ import { ChartConfig } from '@w3f/helm';
 import { Crypto, KeyTypes, KeysBundle } from '@w3f/crypto';
 
 import { ChartManager } from '../../types';
-import { BaseChart } from './base';
+import { BaseChart } from '../../helm';
+
 
 const baseP2PPort = 30333;
 

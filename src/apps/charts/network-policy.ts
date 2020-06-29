@@ -1,7 +1,7 @@
 import { ChartConfig } from '@w3f/helm';
 
 import { ChartManager } from '../../types';
-import { BaseChart } from './base';
+import { BaseChart } from '../../helm';
 
 
 export class NetworkPolicyChart extends BaseChart implements ChartManager {
