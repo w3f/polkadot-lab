@@ -75,6 +75,17 @@ export interface EngineConfig {
     logger: Logger;
 }
 
+export interface HelmManagerConfig {
+    basePath: string;
+    kubeconfig: string;
+    dependencies: Dependencies;
+    logger: Logger;
+}
+
+export interface HelmManager {
+    installChart(chart: ChartManager): Promise<void>;
+}
+
 export interface AppsConfig {
     topology: Topology;
     size: number;
