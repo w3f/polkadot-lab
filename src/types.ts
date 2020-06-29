@@ -75,6 +75,13 @@ export interface EngineConfig {
     logger: Logger;
 }
 
+export interface AppsConfig {
+    topology: Topology;
+    size: number;
+    dependencies?: Dependencies;
+    logger: Logger;
+}
+
 export interface ChartManager {
     cfg(): Promise<ChartConfig>;
     data(): Promise<any>;

@@ -6,7 +6,8 @@ import {
     Topology,
     ApplicationsManager,
     Dependencies,
-    ChartManager
+    ChartManager,
+    AppsConfig
 } from '../types';
 import {
     NetworkPolicyChart,
@@ -17,13 +18,17 @@ import {
 
 export class Apps implements ApplicationsManager {
     private helm: Helm;
+    private topology: Topology;
+    private size: number;
+    private dependencies: Dependencies;
+    private logger: Logger
 
-    constructor(
-        private readonly topology: Topology,
-        private readonly size: number,
-        private readonly dependencies: Dependencies,
-        private readonly logger: Logger
-    ) { }
+    constructor(cfg: AppsConfig) {
+        this.topology = cfg.topology;
+        this.size = cfg.size;
+        this.dependencies = cfg.dependencies;
+        this.logger = cfg.logger;
+    }
 
     async install(kubeconfig: string): Promise<void> {
         await this.init(kubeconfig);

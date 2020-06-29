@@ -13,7 +13,14 @@ export async function startAction(cmd): Promise<void> {
     const logger = createLogger(cfg.logLevel);
 
     const platform = new Platform(cfg.mode, cfg.size, logger);
-    const apps = new Apps(cfg.topology, cfg.size, cfg.dependencies, logger);
+
+    const appCfg = {
+        topology: cfg.topology,
+        size: cfg.size,
+        dependencies: cfg.dependencies,
+        logger
+    };
+    const apps = new Apps(appCfg);
     const results = new Results(cfg.targetStd, cfg.testCases, logger);
 
     const engineCfg = {
