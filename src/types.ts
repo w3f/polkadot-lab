@@ -32,7 +32,7 @@ export interface ApplicationsManager {
 }
 
 export interface ResultsManager {
-    runTestCases(): Promise<Array<LabResult>>;
+    runTestCases(kubeconfig: string): Promise<Array<LabResult>>;
 }
 
 export enum ExecutionMode {

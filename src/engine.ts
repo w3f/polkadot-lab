@@ -41,7 +41,7 @@ export class Engine implements EngineManager {
         this.logger.info('Dependencies and nodes installed');
 
         this.logger.info('Executing test cases...');
-        const resultData = await this.results.runTestCases();
+        const resultData = await this.results.runTestCases(kubeconfigPath);
         this.logger.info('Tests executed');
     }
 

@@ -11,7 +11,7 @@ export class Results implements ResultsManager {
         private readonly logger: Logger
     ) { }
 
-    async runTestCases(): Promise<Array<LabResult>> {
+    async runTestCases(kubeconfig: string): Promise<Array<LabResult>> {
         const result: Array<Promise<LabResult>> = [];
         for (let i = 0; i < this.testCases.length; i++) {
             const testCaseResult = this.runTestCase(i);
@@ -21,6 +21,14 @@ export class Results implements ResultsManager {
     }
 
     private async runTestCase(order: number): Promise<LabResult> {
+        // deploy test case chart
+
+        // port-forward
+
+        // wait for results
+
+        // return results
+
         return
     }
 }
