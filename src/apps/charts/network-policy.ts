@@ -12,10 +12,14 @@ export class NetworkPolicyChart extends BaseChart implements ChartManager {
             wait: true
         };
     }
-    async data(): Promise<any> {
+    async values(): Promise<any> {
         return {
             topology: this.topology,
-            size: this.size
+            size: this.size,
+            labelSelector: {
+                key: "node",
+                valuePrefix: "polkadot"
+            }
         };
     }
 }

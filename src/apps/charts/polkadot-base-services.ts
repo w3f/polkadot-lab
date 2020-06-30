@@ -12,4 +12,17 @@ export class PolkadotBaseServicesChart extends BaseChart implements ChartManager
             wait: true
         };
     }
+
+    async values(): Promise<any> {
+        return {
+            name: "polkadot-base-services",
+            deploymentName: "polkadot-lab",
+            local: false,
+            monitoring: false,
+            benchmark: true,
+            includeValidatorBootNode: false,
+            createCertIssuer: false,
+            createBootNodeService: false
+        }
+    }
 }
