@@ -12,7 +12,7 @@ export class BaseChart {
         protected readonly logger: Logger
     ) { }
 
-    async data(): Promise<any> {
+    async values(): Promise<any> {
         return {};
     }
 }

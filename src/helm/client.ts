@@ -1,6 +1,5 @@
 import { Helm } from '@w3f/helm';
 import { Logger } from '@w3f/logger';
-import path from 'path';
 
 import {
     HelmManager,
@@ -12,13 +11,11 @@ import {
 
 export class HelmClient implements HelmManager {
     private client: Helm;
-    private basePath: string;
     private kubeconfig: string;
     private dependencies: Dependencies;
     private logger: Logger;
 
     constructor(config: HelmManagerConfig) {
-        this.basePath = config.basePath;
         this.kubeconfig = config.kubeconfig;
         this.dependencies = config.dependencies;
         this.logger = config.logger;
@@ -28,22 +25,17 @@ export class HelmClient implements HelmManager {
         await this.init();
 
         const chartCfg = await chart.cfg();
-        const data = await chart.data();
+        const values = await chart.values();
 
-        const valuesTemplatePath = path.join(this.basePath, 'values', `${chartCfg.chart}.yaml`);
-        const valuesTemplate = {
-            path: valuesTemplatePath,
-            data
-        };
-        chartCfg.valuesTemplate = valuesTemplate;
+        chartCfg.values = values;
         if (this.dependencies &&
             this.dependencies[chartCfg.chart]) {
             const dependencies = this.dependencies[chartCfg.chart];
             if (dependencies.image) {
-                data['image'] = {};
+                values['image'] = {};
                 ['repo', 'tag'].forEach((field) => {
                     if (dependencies.image[field]) {
-                        data['image'][field] = dependencies.image[field];
+                        values['image'][field] = dependencies.image[field];
                     }
                 });
             }

@@ -1,5 +1,4 @@
 import { Logger } from '@w3f/logger';
-import path from 'path';
 
 import {
     Topology,
@@ -33,7 +32,6 @@ export class Apps implements ApplicationsManager {
 
     async install(kubeconfig: string): Promise<void> {
         const helmCfg = {
-            basePath: __dirname,
             kubeconfig,
             dependencies: this.dependencies,
             logger: this.logger
