@@ -76,7 +76,6 @@ export interface EngineConfig {
 }
 
 export interface HelmManagerConfig {
-    basePath: string;
     kubeconfig: string;
     dependencies: Dependencies;
     logger: Logger;
@@ -95,5 +94,5 @@ export interface AppsConfig {
 
 export interface ChartManager {
     cfg(): Promise<ChartConfig>;
-    data(): Promise<any>;
+    values(): Promise<any>;
 }
