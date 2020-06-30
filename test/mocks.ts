@@ -1,4 +1,4 @@
-import { ResultData } from '../src/types';
+import { LabResult } from '@w3f/polkadot-lab-types';
 
 
 export class PlatformMock {
@@ -20,7 +20,7 @@ export class AppsMock {
 }
 
 export class ResultsMock {
-    async runTests(): Promise<ResultData> {
+    async runTestCases(): Promise<Array<LabResult>> {
         return
     }
 }
