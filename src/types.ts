@@ -11,6 +11,7 @@ export enum Topology {
 
 export interface TestCaseDefinition {
     name: string;
+    dependency: Dependency;
     config: TestCaseInputConfig;
 }
 
@@ -40,14 +41,9 @@ export enum ExecutionMode {
     Remote = 'remote'
 }
 
-export interface Image {
-    repo?: string;
-    tag?: string;
-}
-
 export interface Dependency {
-    image?: Image;
-    chart?: string;
+    values?: any;
+    version?: string;
 }
 
 export interface Dependencies {
@@ -77,12 +73,11 @@ export interface EngineConfig {
 
 export interface HelmManagerConfig {
     kubeconfig: string;
-    dependencies: Dependencies;
     logger: Logger;
 }
 
 export interface HelmManager {
-    installChart(chart: ChartManager): Promise<void>;
+    installChart(chart: ChartManager, dependency?: Dependency): Promise<void>;
 }
 
 export interface AppsConfig {
@@ -93,6 +88,7 @@ export interface AppsConfig {
 }
 
 export interface ChartManager {
+    name(): string;
     cfg(): Promise<ChartConfig>;
     values(): Promise<any>;
 }
