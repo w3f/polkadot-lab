@@ -5,6 +5,9 @@ import { BaseChart } from '../../helm';
 
 
 export class NetworkPolicyChart extends BaseChart implements ChartManager {
+    name(): string {
+        return 'w3f/network-policy';
+    }
     async cfg(): Promise<ChartConfig> {
         return {
             name: 'network-policy',

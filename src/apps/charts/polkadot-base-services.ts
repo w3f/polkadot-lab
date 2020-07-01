@@ -5,6 +5,9 @@ import { BaseChart } from '../../helm';
 
 
 export class PolkadotBaseServicesChart extends BaseChart implements ChartManager {
+    name(): string {
+        return 'w3f/polkadot-base-services';
+    }
     async cfg(): Promise<ChartConfig> {
         return {
             name: 'polkadot-base-services',

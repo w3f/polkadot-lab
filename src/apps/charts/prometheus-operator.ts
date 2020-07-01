@@ -5,6 +5,10 @@ import { BaseChart } from '../../helm';
 
 
 export class PrometheusOperatorChart extends BaseChart implements ChartManager {
+    name(): string {
+        return 'stable/prometheus-operator';
+    }
+
     async cfg(): Promise<ChartConfig> {
         return {
             name: 'prometheus-operator',

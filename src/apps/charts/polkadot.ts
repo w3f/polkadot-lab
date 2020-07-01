@@ -20,6 +20,10 @@ export class PolkadotChart extends BaseChart implements ChartManager {
         };
     }
 
+    name(): string {
+        return 'w3f/polkadot';
+    }
+
     async values(): Promise<any> {
         if (!this.keys) {
             const crypto = new Crypto(this.size);
