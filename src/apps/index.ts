@@ -4,8 +4,8 @@ import {
     Topology,
     ApplicationsManager,
     Dependencies,
-    HelmManager,
-    AppsConfig
+    AppsConfig,
+    HelmManagerConfig
 } from '../types';
 import {
     NetworkPolicyChart,
@@ -17,7 +17,7 @@ import { HelmClient } from '../helm';
 
 
 export class Apps implements ApplicationsManager {
-    private helm: HelmManager;
+    private helm: HelmClient;
     private topology: Topology;
     private size: number;
     private dependencies: Dependencies;
@@ -31,9 +31,8 @@ export class Apps implements ApplicationsManager {
     }
 
     async install(kubeconfig: string): Promise<void> {
-        const helmCfg = {
+        const helmCfg: HelmManagerConfig = {
             kubeconfig,
-            dependencies: this.dependencies,
             logger: this.logger
         };
         this.helm = new HelmClient(helmCfg);
@@ -47,14 +46,14 @@ export class Apps implements ApplicationsManager {
         const chartTypes = [PrometheusOperatorChart, NetworkPolicyChart, PolkadotBaseServicesChart];
         for (const chartType of chartTypes) {
             const chart = new chartType(this.topology, this.size, this.logger);
-            await this.helm.installChart(chart);
+            await this.helm.installChart(chart, this.dependencies[chart.name()]);
         }
     }
 
     private async installNodes(): Promise<void> {
         const chart = new PolkadotChart(this.topology, this.size, this.logger);
         for (let i = 0; i < this.size; i++) {
-            await this.helm.installChart(chart);
+            await this.helm.installChart(chart, this.dependencies[chart.name()]);
         }
     }
 }
