@@ -15,6 +15,7 @@ mode: local
 size: 4
 topology: line
 targetStd: 1.5
+testCases:
 - name: NumberOfPeers
   dependency:
     w3f/polkadot-lab-test-case-number-of-peers:
