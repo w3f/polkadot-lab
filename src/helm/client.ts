@@ -4,7 +4,7 @@ import { Logger } from '@w3f/logger';
 import {
     HelmManager,
     HelmManagerConfig,
-    Dependencies,
+    Dependency,
     ChartManager
 } from '../types';
 
@@ -12,35 +12,26 @@ import {
 export class HelmClient implements HelmManager {
     private client: Helm;
     private kubeconfig: string;
-    private dependencies: Dependencies;
     private logger: Logger;
 
     constructor(config: HelmManagerConfig) {
         this.kubeconfig = config.kubeconfig;
-        this.dependencies = config.dependencies;
         this.logger = config.logger;
     }
 
-    async installChart(chart: ChartManager): Promise<void> {
+    async installChart(chart: ChartManager, dependency?: Dependency): Promise<void> {
         await this.init();
 
         const chartCfg = await chart.cfg();
         const values = await chart.values();
 
         chartCfg.values = values;
-        if (this.dependencies &&
-            this.dependencies[chartCfg.chart]) {
-            const dependencies = this.dependencies[chartCfg.chart];
-            if (dependencies.image) {
-                values['image'] = {};
-                ['repo', 'tag'].forEach((field) => {
-                    if (dependencies.image[field]) {
-                        values['image'][field] = dependencies.image[field];
-                    }
-                });
+        if (dependency) {
+            if (dependency.values) {
+                chartCfg.values = Object.assign(chartCfg.values, dependency.values);
             }
-            if (dependencies.chart) {
-                chartCfg.version = dependencies.chart;
+            if (dependency.version) {
+                chartCfg.version = dependency.version;
             }
         }
         await this.client.install(chartCfg);
