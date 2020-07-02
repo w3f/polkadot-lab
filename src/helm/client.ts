@@ -23,6 +23,7 @@ export class HelmClient implements HelmManager {
         await this.init();
 
         const chartCfg = await chart.cfg();
+        this.logger.debug(`About to install release ${chartCfg.name} of ${chartCfg.chart}`);
         const values = await chart.values();
 
         chartCfg.values = values;
