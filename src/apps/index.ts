@@ -43,15 +43,18 @@ export class Apps implements ApplicationsManager {
     }
 
     private async installDependencies(): Promise<void> {
-        const chartTypes = [PrometheusOperatorChart, NetworkPolicyChart, PolkadotBaseServicesChart];
-        for (const chartType of chartTypes) {
-            const chart = new chartType(this.topology, this.size, this.logger);
-            await this.helm.installChart(chart, this.dependencies[chart.name()]);
-        }
+        let chart = new PrometheusOperatorChart(this.logger);
+        await this.helm.installChart(chart, this.dependencies[chart.name()]);
+
+        chart = new NetworkPolicyChart(this.topology, this.size, this.logger);
+        await this.helm.installChart(chart, this.dependencies[chart.name()]);
+
+        chart = new PolkadotBaseServicesChart(this.logger);
+        await this.helm.installChart(chart, this.dependencies[chart.name()]);
     }
 
     private async installNodes(): Promise<void> {
-        const chart = new PolkadotChart(this.topology, this.size, this.logger);
+        const chart = new PolkadotChart(this.size, this.logger);
         for (let i = 0; i < this.size; i++) {
             await this.helm.installChart(chart, this.dependencies[chart.name()]);
         }

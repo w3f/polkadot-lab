@@ -1,5 +1,6 @@
 import { ChartConfig } from '@w3f/helm';
 import { Crypto, KeyTypes, KeysBundle } from '@w3f/crypto';
+import { Logger } from '@w3f/logger';
 
 import { ChartManager } from '../../types';
 import { BaseChart } from '../../helm';
@@ -11,6 +12,13 @@ export class PolkadotChart extends BaseChart implements ChartManager {
     private commonValues: any;
     private index = 0;
     private keys: KeysBundle;
+
+    constructor(
+        private readonly size: number,
+        protected readonly logger: Logger
+    ) {
+        super(logger);
+    }
 
     async cfg(): Promise<ChartConfig> {
         return {

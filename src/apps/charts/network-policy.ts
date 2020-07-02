@@ -1,10 +1,21 @@
 import { ChartConfig } from '@w3f/helm';
+import { Logger } from '@w3f/logger';
 
-import { ChartManager } from '../../types';
+import {
+    ChartManager,
+    Topology
+} from '../../types';
 import { BaseChart } from '../../helm';
 
 
 export class NetworkPolicyChart extends BaseChart implements ChartManager {
+    constructor(
+        private readonly topology: Topology,
+        private readonly size: number,
+        protected readonly logger: Logger) {
+        super(logger);
+    }
+
     name(): string {
         return 'w3f/network-policy';
     }
