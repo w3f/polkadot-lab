@@ -9,17 +9,20 @@ should();
 describe('E2E', () => {
     it('should run a deployment and retrieve results', async () => {
         const cfgContent = `
-logLevel: 'info'
+logLevel: 'debug'
 maximumExecutionTime: '60m'
 mode: local
 size: 4
 topology: line
 targetStd: 1.5
 testCases:
-- name: NumberOfPeers
+- name: test-case-number-of-peers
   dependency:
-    w3f/polkadot-lab-test-case-number-of-peers:
+    w3f/polkadot-lab-test-case-prometheus:
       version: "v0.1.0"
+      prometheus:
+        name: number-of-peers
+        query: polkadot_sub_libp2p_peers_count
 dependencies:
   w3f/polkadot:
     values:
