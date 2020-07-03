@@ -18,18 +18,19 @@ targetStd: 1.5
 testCases:
 - name: test-case-number-of-peers
   dependency:
-    w3f/polkadot-lab-test-case-prometheus:
-      version: "v0.1.0"
+    chart: w3f/polkadot-lab-test-case-prometheus
+    version: "v0.1.0"
+    values:
       prometheus:
         name: number-of-peers
         query: polkadot_sub_libp2p_peers_count
 dependencies:
-  w3f/polkadot:
-    values:
-      image:
-        repo: 'parity/polkadot'
-        tag: 'v0.8.12'
-    version: 'v0.27.3'
+- chart: w3f/polkadot
+  values:
+    image:
+      repo: 'parity/polkadot'
+      tag: 'v0.8.12'
+  version: 'v0.27.3'
 `;
         const cfgFile = tmp.fileSync();
         fs.writeSync(cfgFile.fd, cfgContent);
