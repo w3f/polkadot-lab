@@ -6,6 +6,7 @@ import {
     ChartManager,
     TestCaseDefinition
 } from '../types';
+import { TestCasePort } from '../constants';
 
 
 export class TestCaseChart extends BaseChart implements ChartManager {
@@ -29,6 +30,12 @@ export class TestCaseChart extends BaseChart implements ChartManager {
     }
 
     async values(): Promise<any> {
-        return {}
+        const values = this.definition.dependency.values;
+
+        const overrides = {
+            port: TestCasePort
+        }
+
+        return Object.assign(values, overrides);
     }
 }
