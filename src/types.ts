@@ -42,13 +42,12 @@ export enum ExecutionMode {
 }
 
 export interface Dependency {
+    chart: string;
     values?: any;
     version?: string;
 }
 
-export interface Dependencies {
-    [name: string]: Dependency;
-}
+export type Dependencies = Array<Dependency>;
 
 export interface InputConfig {
     logLevel: string;
