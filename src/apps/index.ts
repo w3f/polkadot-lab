@@ -4,6 +4,7 @@ import {
     Topology,
     ApplicationsManager,
     Dependencies,
+    Dependency,
     AppsConfig,
     HelmManagerConfig
 } from '../types';
@@ -44,13 +45,16 @@ export class Apps implements ApplicationsManager {
 
     private async installDependencies(): Promise<void> {
         let chart = new PrometheusOperatorChart(this.logger);
-        await this.helm.installChart(chart, this.dependencies[chart.name()]);
+        let dependency = this.findDependency(chart.name());
+        await this.helm.installChart(chart, dependency);
 
         chart = new NetworkPolicyChart(this.topology, this.size, this.logger);
-        await this.helm.installChart(chart, this.dependencies[chart.name()]);
+        dependency = this.findDependency(chart.name());
+        await this.helm.installChart(chart, dependency);
 
         chart = new PolkadotBaseServicesChart(this.logger);
-        await this.helm.installChart(chart, this.dependencies[chart.name()]);
+        dependency = this.findDependency(chart.name());
+        await this.helm.installChart(chart, dependency);
     }
 
     private async installNodes(): Promise<void> {
@@ -58,5 +62,9 @@ export class Apps implements ApplicationsManager {
         for (let i = 0; i < this.size; i++) {
             await this.helm.installChart(chart, this.dependencies[chart.name()]);
         }
+    }
+
+    private findDependency(name: string): Dependency {
+        return this.dependencies.find(element => element.chart === name);
     }
 }

@@ -23,8 +23,12 @@ export class TestCaseChart extends BaseChart implements ChartManager {
     async cfg(): Promise<ChartConfig> {
         return {
             name: this.definition.name,
-            chart: Object.keys(this.definition.dependency)[0],
-            wait: false
+            chart: this.definition.dependency.chart,
+            wait: true
         };
+    }
+
+    async values(): Promise<any> {
+        return {}
     }
 }
