@@ -7,12 +7,12 @@ targetStd: 1.5
 testCases:
 - name: NumberOfPeers
   dependency:
-    w3f/polkadot-lab-test-case-number-of-peers:
-      version: "v0.1.0"
+    chart: w3f/polkadot-lab-test-case-number-of-peers
+    version: "v0.1.0"
 dependencies:
-  w3f/polkadot:
-    values:
-      image:
-        repo: 'parity/polkadot'
-        tag: 'v0.8.12'
-    version: 'v0.27.3'
+- chart: w3f/polkadot
+  version: 'v0.27.3'
+  values:
+    image:
+      repo: 'parity/polkadot'
+      tag: 'v0.8.12'
