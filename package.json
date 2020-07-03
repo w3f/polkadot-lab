@@ -20,6 +20,7 @@
     "dist/**/*"
   ],
   "dependencies": {
+    "@kubernetes/client-node": "^0.12.0",
     "@w3f/config": "^0.1.1",
     "@w3f/crypto": "^0.3.0",
     "@w3f/helm": "^0.6.0",

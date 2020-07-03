@@ -48,6 +48,29 @@
     underscore "^1.9.1"
     ws "^6.1.0"
 
+"@kubernetes/client-node@^0.12.0":
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/@kubernetes/client-node/-/client-node-0.12.0.tgz#79120311bced206ac8fa36435fb4cc2c1828fff2"
+  integrity sha512-u57q5IaZl91f7YZoZOsgCa31hHyowHxFG88XZXd8arI8heSxbdHWHineo/8mLZbeSbHkge9Awae1stQZzuTnjg==
+  dependencies:
+    "@types/js-yaml" "^3.12.1"
+    "@types/node" "^10.12.0"
+    "@types/request" "^2.47.1"
+    "@types/underscore" "^1.8.9"
+    "@types/ws" "^6.0.1"
+    byline "^5.0.0"
+    execa "1.0.0"
+    isomorphic-ws "^4.0.1"
+    js-yaml "^3.13.1"
+    jsonpath-plus "^0.19.0"
+    openid-client "2.5.0"
+    request "^2.88.0"
+    rfc4648 "^1.3.0"
+    shelljs "^0.8.2"
+    tslib "^1.9.3"
+    underscore "^1.9.1"
+    ws "^6.1.0"
+
 "@polkadot/keyring@2.13.1":
   version "2.13.1"
   resolved "https://registry.yarnpkg.com/@polkadot/keyring/-/keyring-2.13.1.tgz#2607d790ac1df0ee1d3508aa47588f425331189f"
