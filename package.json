@@ -26,8 +26,10 @@
     "@w3f/helm": "^0.6.0",
     "@w3f/kind": "^1.2.0",
     "@w3f/logger": "^0.4.0",
+    "@w3f/polkadot-lab-test-case-common": "^0.2.0",
     "@w3f/polkadot-lab-types": "^0.10.1",
     "commander": "^4.1.1",
+    "portastic": "^1.0.1",
     "tmp": "^0.2.1"
   },
   "devDependencies": {
