@@ -1,15 +1,17 @@
 import { ChartConfig } from '@w3f/helm';
 import { Logger } from '@w3f/logger';
+import * as portastic from 'portastic';
 
 import { BaseChart } from '../helm/base-chart';
 import {
     ChartManager,
     TestCaseDefinition
 } from '../types';
-import { TestCasePort } from '../constants';
 
 
 export class TestCaseChart extends BaseChart implements ChartManager {
+    private port: number;
+
     constructor(
         private readonly definition: TestCaseDefinition,
         protected readonly logger: Logger
@@ -30,10 +32,14 @@ export class TestCaseChart extends BaseChart implements ChartManager {
     }
 
     async values(): Promise<any> {
+        if (!this.port) {
+            this.port = (await portastic.find({ min: 11000, max: 12000 }))[0];
+        }
+
         const values = this.definition.dependency.values;
 
         const overrides = {
-            port: TestCasePort
+            port: this.port
         }
 
         return Object.assign(values, overrides);
