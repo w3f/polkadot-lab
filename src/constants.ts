@@ -1,3 +1,3 @@
 export const ClusterName = 'polkadot-lab';
 
-export const TestCasePort = '3000';
+export const localhost = 'localhost';
