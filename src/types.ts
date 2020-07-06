@@ -49,24 +49,47 @@ export interface Dependency {
 
 export type Dependencies = Array<Dependency>;
 
+export enum PersistenceKind {
+    File = 'file',
+    Database = 'database'
+}
+
+export interface FilePersistenceConfig {
+    kind: PersistenceKind.File;
+    path: string;
+}
+
+export interface DatabasePersistenceConfig {
+    kind: PersistenceKind.Database;
+}
+
+export type PersistenceConfig = FilePersistenceConfig | DatabasePersistenceConfig;
+
+export interface PersistenceManager {
+    saveResults(results: Array<LabResult>): Promise<void>
+}
+
 export interface InputConfig {
     logLevel: string;
     maximumExecutionTime: string;
 
-    mode: ExecutionMode; // platform
-    size: number; // platform, apps
+    mode: ExecutionMode;
+    size: number;
 
-    topology: Topology; // apps
-    dependencies?: Dependencies; // apps
+    topology: Topology;
+    dependencies?: Dependencies;
 
-    targetStd: number; // results
-    testCases: TestCaseDefinitions; // results
+    targetStd: number;
+    testCases: TestCaseDefinitions;
+
+    persistence: PersistenceConfig;
 }
 
 export interface EngineConfig {
     platform: PlatformManager;
     apps: ApplicationsManager;
     results: ResultsManager;
+    persistence: PersistenceManager;
     logger: Logger;
 }
 
