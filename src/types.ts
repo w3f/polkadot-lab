@@ -66,7 +66,7 @@ export interface DatabasePersistenceConfig {
 export type PersistenceConfig = FilePersistenceConfig | DatabasePersistenceConfig;
 
 export interface PersistenceManager {
-    saveResults(results: Array<LabResult>): Promise<void>
+    saveResults(results: Array<LabResult>): Promise<void>;
 }
 
 export interface InputConfig {

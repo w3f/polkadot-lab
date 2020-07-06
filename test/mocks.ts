@@ -24,3 +24,9 @@ export class ResultsMock {
         return
     }
 }
+
+export class PersistenceMock {
+    async saveResults(results: Array<LabResult>): Promise<void> {
+        return
+    }
+}

@@ -5,7 +5,8 @@ import { Engine } from '../src/engine';
 import {
     PlatformMock,
     AppsMock,
-    ResultsMock
+    ResultsMock,
+    PersistenceMock
 } from './mocks';
 
 should();
@@ -15,11 +16,13 @@ const logger = createLogger();
 const platform = new PlatformMock();
 const apps = new AppsMock();
 const results = new ResultsMock();
+const persistence = new PersistenceMock();
 
 const cfg = {
     platform,
     apps,
     results,
+    persistence,
     logger
 }
 
