@@ -23,9 +23,10 @@ jobs:
       - run:
           name: Run tests
           command: |
-            wget https://github.com/kubernetes-sigs/kind/releases/download/v0.7.0/kind-linux-amd64
-            chmod a+x ./kind-linux-amd64
-            mv ./kind-linux-amd64 /usr/local/bin/kind
+            apk add curl
+            curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+            chmod a+x ./kubectl
+            mv ./kubectl /usr/local/bin
 
             yarn e2e-test
 
