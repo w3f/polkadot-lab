@@ -11,8 +11,8 @@ export enum Topology {
 
 export interface TestCaseDefinition {
     name: string;
-    dependency: Dependency;
-    config: TestCaseInputConfig;
+    dependency: TestCaseDependency;
+    delay: number;
 }
 
 export type TestCaseDefinitions = Array<TestCaseDefinition>;
@@ -41,10 +41,17 @@ export enum ExecutionMode {
     Remote = 'remote'
 }
 
-export interface Dependency {
+export interface BaseDependency {
     chart: string;
-    values?: any;
     version?: string;
+}
+
+export interface TestCaseDependency extends Dependency {
+    values?: TestCaseInputConfig
+}
+
+export interface Dependency extends BaseDependency {
+    values?: any;
 }
 
 export type Dependencies = Array<Dependency>;
