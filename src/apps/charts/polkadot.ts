@@ -63,7 +63,7 @@ export class PolkadotChart extends BaseChart implements ChartManager {
             };
             values['nodeKey'] = nodeKey;
         } else {
-            values['extraBootNodes'] = [bootNode];
+            values['extraBootnodes'] = [bootNode];
         }
 
         this.index++;
