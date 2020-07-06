@@ -9,4 +9,12 @@ module.exports = {
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
   ],
+  overrides: [
+    {
+      files: "*.ts",
+      rules: {
+        "@typescript-eslint/camelcase": "off"
+      }
+    }
+  ]
 };

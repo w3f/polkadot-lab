@@ -1,5 +1,6 @@
 import { Logger } from '@w3f/logger';
 import { ChartConfig } from '@w3f/helm';
+import { LabResult, TestCaseInputConfig } from '@w3f/polkadot-lab-types';
 
 
 export enum Topology {
@@ -8,11 +9,13 @@ export enum Topology {
     Full = 'full'
 }
 
-export enum Metric {
-    TimeToFinality = 'TimeToFinality'
+export interface TestCaseDefinition {
+    name: string;
+    dependency: Dependency;
+    config: TestCaseInputConfig;
 }
 
-export type Metrics = Array<Metric>;
+export type TestCaseDefinitions = Array<TestCaseDefinition>;
 
 export interface EngineManager {
     start(): Promise<void>;
@@ -29,10 +32,8 @@ export interface ApplicationsManager {
     install(kubeconfig: string): Promise<void>;
 }
 
-export type ResultData = {}
-
 export interface ResultsManager {
-    runTests(): Promise<ResultData>;
+    runTestCases(kubeconfig: string): Promise<Array<LabResult>>;
 }
 
 export enum ExecutionMode {
@@ -40,19 +41,13 @@ export enum ExecutionMode {
     Remote = 'remote'
 }
 
-export interface Image {
-    repo?: string;
-    tag?: string;
-}
-
 export interface Dependency {
-    image?: Image;
-    chart?: string;
+    chart: string;
+    values?: any;
+    version?: string;
 }
 
-export interface Dependencies {
-    [name: string]: Dependency;
-}
+export type Dependencies = Array<Dependency>;
 
 export interface InputConfig {
     logLevel: string;
@@ -65,7 +60,7 @@ export interface InputConfig {
     dependencies?: Dependencies; // apps
 
     targetStd: number; // results
-    metrics: Metrics; // results
+    testCases: TestCaseDefinitions; // results
 }
 
 export interface EngineConfig {
@@ -75,7 +70,24 @@ export interface EngineConfig {
     logger: Logger;
 }
 
+export interface HelmManagerConfig {
+    kubeconfig: string;
+    logger: Logger;
+}
+
+export interface HelmManager {
+    installChart(chart: ChartManager, dependency?: Dependency): Promise<void>;
+}
+
+export interface AppsConfig {
+    topology: Topology;
+    size: number;
+    dependencies?: Dependencies;
+    logger: Logger;
+}
+
 export interface ChartManager {
+    name(): string;
     cfg(): Promise<ChartConfig>;
-    data(): Promise<any>;
+    values(): Promise<any>;
 }
