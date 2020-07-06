@@ -47,7 +47,7 @@ export class Engine implements EngineManager {
         const resultData = await this.results.runTestCases(kubeconfigPath);
 
         this.logger.info('Storing results...');
-        await this.persistence.saveResults(resultData);
+        //await this.persistence.saveResults(resultData);
 
         this.logger.info('Tests executed');
     }
