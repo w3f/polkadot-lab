@@ -5,8 +5,10 @@ import { Logger } from '@w3f/logger';
 import { ChartManager } from '../../types';
 import { BaseChart } from '../../helm';
 
-
 const baseP2PPort = 30333;
+const nodeKey = '0000000000000000000000000000000000000000000000000000000000000000';
+const bootNode = '/dns4/polkadot-0-p2p/tcp/30333/p2p/12D3KooWDpJ7As7BWAwRMfu1VU2WCqNjvq387JEYKDBj4kx6nXTN';
+
 
 export class PolkadotChart extends BaseChart implements ChartManager {
     private commonValues: any;
@@ -55,6 +57,12 @@ export class PolkadotChart extends BaseChart implements ChartManager {
         values['createConfigMap'] = false;
         if (this.index === 0) {
             values['createConfigMap'] = true;
+            values['extraArgs'] = {
+                validator: "--alice"
+            };
+            values['nodeKey'] = nodeKey;
+        } else {
+            values['extraBootNodes'] = [bootNode];
         }
 
         this.index++;
@@ -67,6 +75,12 @@ export class PolkadotChart extends BaseChart implements ChartManager {
             deploymentName: 'polkadot-lab',
 
             monitoring: true,
+
+            extraArgs: {
+                common: "--discover-local"
+            },
+
+            dnsNameservers: null,
 
             persistence: {
                 enabled: true,
