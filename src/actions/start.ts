@@ -6,6 +6,7 @@ import { Engine } from '../engine';
 import { Platform } from '../platform';
 import { Apps } from '../apps';
 import { Results } from '../results';
+import { Persistence } from '../persistence';
 
 
 export async function startAction(cmd): Promise<void> {
@@ -22,11 +23,13 @@ export async function startAction(cmd): Promise<void> {
     };
     const apps = new Apps(appCfg);
     const results = new Results(cfg.targetStd, cfg.testCases, logger);
+    const persistence = new Persistence(cfg.persistence, logger);
 
     const engineCfg = {
         platform,
         apps,
         results,
+        persistence,
         logger
     }
 
@@ -41,5 +44,5 @@ export async function startAction(cmd): Promise<void> {
         exitCode = 1;
     }
     await engine.stop();
-    process.exit(exitCode);
+    //process.exit(exitCode);
 }
