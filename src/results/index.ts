@@ -12,7 +12,9 @@ import {
 } from '../types';
 import { HelmClient } from '../helm';
 import { TestCaseChart } from './test-case-chart';
-import { localhost } from '../constants';
+
+const localhost = 'localhost';
+
 
 type ServerInstance = {
     server: net.Server;
