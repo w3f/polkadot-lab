@@ -48,10 +48,10 @@ describe('E2E', () => {
     it('should run an experiment and retrieve results', async () => {
         const resultRaw = fs.readFileSync(outputFile.name);
         const result = JSON.parse(resultRaw.toString());
-        console.log(`result: ${JSON.stringify(result)}`);
-        const dataLength = result.data.length;
+        const data = result[0].data;
+        const dataLength = data.length;
         for (let i = 0; i < nodes; i++) {
-            const actual = parseInt(result.data[dataLength - i - 1].value[1]);
+            const actual = parseInt(data[dataLength - i - 1].value[1]);
             actual.should.be.gt(0);
         }
     });
