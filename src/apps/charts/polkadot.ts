@@ -4,6 +4,7 @@ import { Logger } from '@w3f/logger';
 
 import { ChartManager } from '../../types';
 import { BaseChart } from '../../helm';
+import { mergeDeep } from '../../utils';
 
 const baseP2PPort = 30333;
 const nodeKey = '0000000000000000000000000000000000000000000000000000000000000000';
@@ -67,7 +68,7 @@ export class PolkadotChart extends BaseChart implements ChartManager {
 
         this.index++;
 
-        return Object.assign(this.commonValues, values);
+        return mergeDeep(this.commonValues, values);
     }
 
     private initCommonValues() {
