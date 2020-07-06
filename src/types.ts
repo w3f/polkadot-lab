@@ -47,7 +47,7 @@ export interface BaseDependency {
 }
 
 export interface TestCaseDependency extends Dependency {
-    values?: TestCaseInputConfig
+    values?: TestCaseInputConfig;
 }
 
 export interface Dependency extends BaseDependency {
