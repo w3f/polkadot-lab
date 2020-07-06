@@ -47,13 +47,13 @@ export class Engine implements EngineManager {
         const resultData = await this.results.runTestCases(kubeconfigPath);
 
         this.logger.info('Storing results...');
-        //await this.persistence.saveResults(resultData);
+        await this.persistence.saveResults(resultData);
 
         this.logger.info('Tests executed');
     }
 
     async stop(): Promise<void> {
         await this.platform.destroy();
-        this.logger.info('Execution engine stopped');
+        //this.logger.info('Execution engine stopped');
     }
 }
