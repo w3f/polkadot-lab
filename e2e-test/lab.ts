@@ -33,6 +33,10 @@ dependencies:
     image:
       repo: 'parity/polkadot'
       tag: 'v0.8.13'
+    chainspec:
+      preset: true
+      custom: false
+      name: 'kusama-dev'
   version: 'v0.27.3'
 `;
 
@@ -48,10 +52,10 @@ describe('E2E', () => {
     it('should run an experiment and retrieve results', async () => {
         const resultRaw = fs.readFileSync(outputFile.name);
         const result = JSON.parse(resultRaw.toString());
+
         const data = result[0].data;
-        const dataLength = data.length;
         for (let i = 0; i < nodes; i++) {
-            const actual = parseInt(data[dataLength - i - 1].value[1]);
+            const actual = parseInt(data[data.length - i - 1].value[1]);
             actual.should.be.gt(0);
         }
     });
