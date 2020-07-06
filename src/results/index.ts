@@ -14,6 +14,7 @@ import { HelmClient } from '../helm';
 import { TestCaseChart } from './test-case-chart';
 
 const localhost = 'localhost';
+const defaultDelay = 40000;
 
 
 type ServerInstance = {
@@ -59,7 +60,7 @@ export class Results implements ResultsManager {
         const serverInstance = await this.portForward(values.port, kubeconfig, this.testCases[order].name);
 
         // wait for results
-        const results = await this.getResults(serverInstance.port);
+        const results = await this.getResults(serverInstance.port, this.testCases[order].delay || defaultDelay);
         this.logger.debug(`Results received: ${JSON.stringify(results)}`);
 
         serverInstance.server.close();
@@ -96,10 +97,10 @@ export class Results implements ResultsManager {
         return { server, port };
     }
 
-    private async getResults(port: number): Promise<LabResult> {
+    private async getResults(port: number, delay: number): Promise<LabResult> {
         const client = new Client(`ws://${localhost}:${port}`, this.logger);
         client.start();
-        await client.delay(40000);
+        await client.delay(delay);
 
         return client.requestStatus();
     }
