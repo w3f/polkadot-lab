@@ -6,15 +6,18 @@ import { startAction } from '../src/actions/start';
 
 should();
 
-describe('E2E', () => {
-    it('should run a deployment and retrieve results', async () => {
-        const cfgContent = `
+const outputFile = tmp.fileSync();
+const nodes = 4;
+const cfgContent = `
 logLevel: 'debug'
 maximumExecutionTime: '60m'
 mode: local
-size: 4
+size: ${nodes}
 topology: line
 targetStd: 1.5
+persistence:
+  kind: file
+  path: ${outputFile.name}
 testCases:
 - name: test-case-number-of-peers
   dependency:
@@ -29,12 +32,27 @@ dependencies:
   values:
     image:
       repo: 'parity/polkadot'
-      tag: 'v0.8.12'
+      tag: 'v0.8.13'
   version: 'v0.27.3'
 `;
+
+
+describe('E2E', () => {
+    before(async () => {
         const cfgFile = tmp.fileSync();
         fs.writeSync(cfgFile.fd, cfgContent);
 
         await startAction({ config: cfgFile.name });
+    });
+
+    it('should run an experiment and retrieve results', async () => {
+        const resultRaw = fs.readFileSync(outputFile.name);
+        const result = JSON.parse(resultRaw.toString());
+        console.log(`result: ${JSON.stringify(result)}`);
+        const dataLength = result.data.length;
+        for (let i = 0; i < nodes; i++) {
+            const actual = parseInt(result.data[dataLength - i - 1].value[1]);
+            actual.should.be.gt(0);
+        }
     });
 });
