@@ -20,7 +20,7 @@ export class SubstrateTelemetryChart extends BaseChart implements ChartManager {
         return {
             name: 'substrate-telemetry',
             chart: 'w3f/substrate-telemetry',
-            wait: false
+            wait: true
         };
     }
     async values(): Promise<any> {
@@ -44,6 +44,12 @@ export class SubstrateTelemetryChart extends BaseChart implements ChartManager {
                 validators: {
                     enabled: false
                 }
+            },
+            frontend: {
+                enabled: false
+            },
+            ingress: {
+                enabled: false
             }
         };
     }
