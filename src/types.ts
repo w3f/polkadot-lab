@@ -89,6 +89,8 @@ export interface InputConfig {
     testCases: TestCaseDefinitions;
 
     persistence: PersistenceConfig;
+
+    settlementTime?: number;
 }
 
 export interface EngineConfig {

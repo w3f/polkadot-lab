@@ -6,11 +6,17 @@ topology: Line
 persistence:
   kind: file
   path: /tmp/polkadot-lab.json
+settlementTime: 20000
 testCases:
-- name: NumberOfPeers
+- name: test-case-number-of-peers
+  delay: 120000
   dependency:
-    chart: w3f/polkadot-lab-test-case-number-of-peers
+    chart: w3f/polkadot-lab-test-case-prometheus
     version: "v0.1.0"
+    values:
+      prometheus:
+        name: number-of-peers
+        query: polkadot_sub_libp2p_peers_count
 dependencies:
 - chart: w3f/polkadot
   version: 'v0.27.3'

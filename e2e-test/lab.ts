@@ -17,6 +17,7 @@ topology: line
 persistence:
   kind: file
   path: ${outputFile.name}
+settlementTime: 20000
 testCases:
 - name: test-case-number-of-peers
   delay: 120000
