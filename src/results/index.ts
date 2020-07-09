@@ -8,7 +8,8 @@ import {
     ResultsManager,
     TestCaseDefinitions,
     HelmManagerConfig,
-    Dependency
+    Dependency,
+    ResultsConfig
 } from '../types';
 import { HelmClient } from '../helm';
 import { TestCaseChart } from './test-case-chart';
@@ -24,11 +25,15 @@ type ServerInstance = {
 
 export class Results implements ResultsManager {
     private helm: HelmClient;
+    private testCases: TestCaseDefinitions;
+    private settlementTime: number;
+    private logger: Logger;
 
-    constructor(
-        private readonly testCases: TestCaseDefinitions,
-        private readonly logger: Logger
-    ) { }
+    constructor(cfg: ResultsConfig) {
+        this.testCases = cfg.testCases;
+        this.settlementTime = cfg.settlementTime;
+        this.logger = cfg.logger;
+    }
 
     // sequential execution
     async runTestCases(kubeconfig: string): Promise<Array<LabResult>> {
@@ -37,6 +42,10 @@ export class Results implements ResultsManager {
             logger: this.logger
         };
         this.helm = new HelmClient(helmCfg);
+
+        if (this.settlementTime) {
+            await this.settlement();
+        }
 
         const result: Array<LabResult> = [];
         for (let i = 0; i < this.testCases.length; i++) {
@@ -110,5 +119,9 @@ export class Results implements ResultsManager {
         const chart = new TestCaseChart(this.testCases[order], this.logger);
 
         return this.helm.uninstallChart(chart.name());
+    }
+
+    private settlement() {
+        return new Promise(resolve => setTimeout(resolve, this.settlementTime));
     }
 }
