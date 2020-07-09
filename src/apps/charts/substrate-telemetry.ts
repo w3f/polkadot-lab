@@ -20,7 +20,7 @@ export class SubstrateTelemetryChart extends BaseChart implements ChartManager {
         return {
             name: 'substrate-telemetry',
             chart: 'w3f/substrate-telemetry',
-            wait: true
+            wait: false
         };
     }
     async values(): Promise<any> {
