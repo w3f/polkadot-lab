@@ -36,7 +36,7 @@ testCases:
     values:
       prometheus:
         name: time-to-finality
-        query: polkadot_block_finality_seconds_bucket
+        query: rate(polkadot_block_finality_seconds_sum[1m])/rate(polkadot_block_finality_seconds_count[1m])
 dependencies:
 - chart: w3f/substrate-telemetry
   version: 'v2.2.0'
@@ -75,6 +75,9 @@ describe('E2E', () => {
         });
         it('time to finality results', async () => {
             const data = result[1].data;
+
+            const value = parseInt(data[data.length - 1].value[1]);
+            value.should.be.gt(10).and.lt(25);
         });
     });
 });
