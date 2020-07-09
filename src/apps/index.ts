@@ -81,7 +81,7 @@ export class Apps implements ApplicationsManager {
 
         for (const dependencyParameters of dependenciesParameters) {
             const chart = new dependencyParameters.chartManager(dependencyParameters.parameters);
-            let dependency = this.findDependency(chart.name());
+            const dependency = this.findDependency(chart.name());
             await this.helm.installChart(chart, dependency);
         }
     }
