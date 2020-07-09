@@ -77,9 +77,7 @@ export class PolkadotChart extends BaseChart implements ChartManager {
 
             monitoring: true,
 
-            extraArgs: {
-                common: "--discover-local"
-            },
+            telemetry: 'ws://substrate-telemetry-backend:8000/submit',
 
             dnsNameservers: null,
 
