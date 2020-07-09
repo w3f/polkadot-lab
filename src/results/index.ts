@@ -30,7 +30,7 @@ export class Results implements ResultsManager {
         private readonly logger: Logger
     ) { }
 
-    // parallel execution
+    // sequential execution
     async runTestCases(kubeconfig: string): Promise<Array<LabResult>> {
         const helmCfg: HelmManagerConfig = {
             kubeconfig,
@@ -38,12 +38,12 @@ export class Results implements ResultsManager {
         };
         this.helm = new HelmClient(helmCfg);
 
-        const result: Array<Promise<LabResult>> = [];
+        const result: Array<LabResult> = [];
         for (let i = 0; i < this.testCases.length; i++) {
-            const testCaseResult = this.runTestCase(i, kubeconfig);
+            const testCaseResult = await this.runTestCase(i, kubeconfig);
             result.push(testCaseResult);
         }
-        return Promise.all(result);
+        return result;
     }
 
     private async runTestCase(order: number, kubeconfig: string): Promise<LabResult> {
@@ -64,6 +64,8 @@ export class Results implements ResultsManager {
 
         serverInstance.server.close();
         serverInstance.server.unref();
+
+        await this.removeTestCase(order);
 
         return results;
     }
@@ -102,5 +104,11 @@ export class Results implements ResultsManager {
         await client.delay(delay);
 
         return client.requestStatus();
+    }
+
+    private async removeTestCase(order: number): Promise<void> {
+        const chart = new TestCaseChart(this.testCases[order], this.logger);
+
+        return this.helm.uninstallChart(chart.name());
     }
 }
