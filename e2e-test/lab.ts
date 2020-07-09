@@ -20,7 +20,7 @@ persistence:
   path: ${outputFile.name}
 testCases:
 - name: test-case-number-of-peers
-  delay: 80000
+  delay: 120000
   dependency:
     chart: w3f/polkadot-lab-test-case-prometheus
     version: "v0.1.0"
