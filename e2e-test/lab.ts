@@ -65,12 +65,15 @@ describe('E2E', () => {
     });
 
     describe('experiment execution', () => {
-        it('should run an experiment and retrieve number of peers results', async () => {
+        it('number of peers results', async () => {
             const data = result[0].data;
             for (let i = 0; i < nodes; i++) {
                 const actual = parseInt(data[data.length - i - 1].value[1]);
                 actual.should.be.gt(0);
             }
+        });
+        it('time to finality results', async () => {
+            const data = result[1].data;
         });
     });
 });
