@@ -93,6 +93,12 @@ export interface InputConfig {
     settlementTime?: number;
 }
 
+export interface ResultsConfig {
+    settlementTime: number;
+    testCases: TestCaseDefinitions;
+    logger: Logger;
+}
+
 export interface EngineConfig {
     platform: PlatformManager;
     apps: ApplicationsManager;
