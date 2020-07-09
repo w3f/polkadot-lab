@@ -39,6 +39,10 @@ export class HelmClient implements HelmManager {
         await this.client.install(chartCfg);
     }
 
+    async uninstallChart(name: string): Promise<void> {
+        return this.client.uninstall(name);
+    }
+
     private async init(): Promise<void> {
         if (!this.client) {
             this.client = await Helm.create(this.kubeconfig, this.logger);
