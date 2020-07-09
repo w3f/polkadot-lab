@@ -3,7 +3,6 @@ maximumExecutionTime: '60m'
 mode: Local
 size: 4
 topology: Line
-targetStd: 1.5
 persistence:
   kind: file
   path: /tmp/polkadot-lab.json

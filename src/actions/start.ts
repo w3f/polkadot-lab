@@ -22,7 +22,7 @@ export async function startAction(cmd): Promise<void> {
         logger
     };
     const apps = new Apps(appCfg);
-    const results = new Results(cfg.targetStd, cfg.testCases, logger);
+    const results = new Results(cfg.testCases, logger);
     const persistence = new Persistence(cfg.persistence, logger);
 
     const engineCfg = {

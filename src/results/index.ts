@@ -26,7 +26,6 @@ export class Results implements ResultsManager {
     private helm: HelmClient;
 
     constructor(
-        private readonly targetStd: number,
         private readonly testCases: TestCaseDefinitions,
         private readonly logger: Logger
     ) { }

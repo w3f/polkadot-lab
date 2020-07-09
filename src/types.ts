@@ -86,7 +86,6 @@ export interface InputConfig {
     topology: Topology;
     dependencies?: Dependencies;
 
-    targetStd: number;
     testCases: TestCaseDefinitions;
 
     persistence: PersistenceConfig;
