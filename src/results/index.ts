@@ -44,6 +44,7 @@ export class Results implements ResultsManager {
         this.helm = new HelmClient(helmCfg);
 
         if (this.settlementTime) {
+            this.logger.info(`Waiting ${this.settlement} miliseconds for the network to settle...`);
             await this.settlement();
         }
 
