@@ -36,7 +36,7 @@ testCases:
     values:
       prometheus:
         name: time-to-finality
-        query: polkadot_block_finality_seconds
+        query: polkadot_block_finality_seconds_bucket
 dependencies:
 - chart: w3f/substrate-telemetry
   version: 'v2.2.0'
