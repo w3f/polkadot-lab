@@ -106,6 +106,7 @@ export interface HelmManagerConfig {
 
 export interface HelmManager {
     installChart(chart: ChartManager, dependency?: Dependency): Promise<void>;
+    uninstallChart(name: string): Promise<void>;
 }
 
 export interface AppsConfig {
