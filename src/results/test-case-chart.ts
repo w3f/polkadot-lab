@@ -7,6 +7,7 @@ import {
     ChartManager,
     TestCaseDefinition
 } from '../types';
+import { mergeDeep } from '../utils';
 
 
 export class TestCaseChart extends BaseChart implements ChartManager {
@@ -42,6 +43,6 @@ export class TestCaseChart extends BaseChart implements ChartManager {
             port: this.port
         }
 
-        return Object.assign(values, overrides);
+        return mergeDeep(values, overrides);
     }
 }

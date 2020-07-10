@@ -12,10 +12,22 @@ import {
     NetworkPolicyChart,
     PolkadotBaseServicesChart,
     PolkadotChart,
-    PrometheusOperatorChart
+    PrometheusOperatorChart,
+    SubstrateTelemetryChart
 } from './charts';
 import { HelmClient } from '../helm';
 
+type ChartClass = (
+    typeof NetworkPolicyChart |
+    typeof PolkadotBaseServicesChart |
+    typeof PrometheusOperatorChart |
+    typeof SubstrateTelemetryChart
+)
+
+type ChartParameters = {
+    chartManager: ChartClass;
+    parameters: any;
+}
 
 export class Apps implements ApplicationsManager {
     private helm: HelmClient;
@@ -44,23 +56,41 @@ export class Apps implements ApplicationsManager {
     }
 
     private async installDependencies(): Promise<void> {
-        let chart = new PrometheusOperatorChart(this.logger);
-        let dependency = this.findDependency(chart.name());
-        await this.helm.installChart(chart, dependency);
+        const dependenciesParameters: Array<ChartParameters> = [
+            {
+                chartManager: PrometheusOperatorChart,
+                parameters: this.logger
+            },
+            {
+                chartManager: NetworkPolicyChart,
+                parameters: {
+                    topology: this.topology,
+                    size: this.size,
+                    logger: this.logger
+                }
+            },
+            {
+                chartManager: PolkadotBaseServicesChart,
+                parameters: this.logger
+            },
+            {
+                chartManager: SubstrateTelemetryChart,
+                parameters: this.logger
+            },
+        ];
 
-        chart = new NetworkPolicyChart(this.topology, this.size, this.logger);
-        dependency = this.findDependency(chart.name());
-        await this.helm.installChart(chart, dependency);
-
-        chart = new PolkadotBaseServicesChart(this.logger);
-        dependency = this.findDependency(chart.name());
-        await this.helm.installChart(chart, dependency);
+        for (const dependencyParameters of dependenciesParameters) {
+            const chart = new dependencyParameters.chartManager(dependencyParameters.parameters);
+            const dependency = this.findDependency(chart.name());
+            await this.helm.installChart(chart, dependency);
+        }
     }
 
     private async installNodes(): Promise<void> {
         const chart = new PolkadotChart(this.size, this.logger);
         for (let i = 0; i < this.size; i++) {
-            await this.helm.installChart(chart, this.dependencies[chart.name()]);
+            const dependency = this.findDependency(chart.name());
+            await this.helm.installChart(chart, dependency);
         }
     }
 

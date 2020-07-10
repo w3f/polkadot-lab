@@ -7,7 +7,8 @@ import {
     EngineManager,
     EngineConfig,
     PlatformManager,
-    ResultsManager
+    ResultsManager,
+    PersistenceManager
 } from './types';
 
 
@@ -15,12 +16,14 @@ export class Engine implements EngineManager {
     private platform: PlatformManager;
     private apps: ApplicationsManager;
     private results: ResultsManager;
+    private persistence: PersistenceManager;
     private logger: Logger;
 
     constructor(cfg: EngineConfig) {
         this.platform = cfg.platform;
         this.apps = cfg.apps;
         this.results = cfg.results;
+        this.persistence = cfg.persistence;
         this.logger = cfg.logger;
     }
 
@@ -42,6 +45,10 @@ export class Engine implements EngineManager {
 
         this.logger.info('Executing test cases...');
         const resultData = await this.results.runTestCases(kubeconfigPath);
+
+        this.logger.info('Storing results...');
+        await this.persistence.saveResults(resultData);
+
         this.logger.info('Tests executed');
     }
 

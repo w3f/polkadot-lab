@@ -8,11 +8,15 @@ import {
     ResultsManager,
     TestCaseDefinitions,
     HelmManagerConfig,
-    Dependency
+    Dependency,
+    ResultsConfig
 } from '../types';
 import { HelmClient } from '../helm';
 import { TestCaseChart } from './test-case-chart';
-import { localhost } from '../constants';
+
+const localhost = 'localhost';
+const defaultDelay = 40000;
+
 
 type ServerInstance = {
     server: net.Server;
@@ -21,14 +25,17 @@ type ServerInstance = {
 
 export class Results implements ResultsManager {
     private helm: HelmClient;
+    private testCases: TestCaseDefinitions;
+    private settlementTime: number;
+    private logger: Logger;
 
-    constructor(
-        private readonly targetStd: number,
-        private readonly testCases: TestCaseDefinitions,
-        private readonly logger: Logger
-    ) { }
+    constructor(cfg: ResultsConfig) {
+        this.testCases = cfg.testCases;
+        this.settlementTime = cfg.settlementTime;
+        this.logger = cfg.logger;
+    }
 
-    // parallel execution
+    // sequential execution
     async runTestCases(kubeconfig: string): Promise<Array<LabResult>> {
         const helmCfg: HelmManagerConfig = {
             kubeconfig,
@@ -36,12 +43,17 @@ export class Results implements ResultsManager {
         };
         this.helm = new HelmClient(helmCfg);
 
-        const result: Array<Promise<LabResult>> = [];
+        if (this.settlementTime) {
+            this.logger.info(`Waiting ${this.settlement} miliseconds for the network to settle...`);
+            await this.settlement();
+        }
+
+        const result: Array<LabResult> = [];
         for (let i = 0; i < this.testCases.length; i++) {
-            const testCaseResult = this.runTestCase(i, kubeconfig);
+            const testCaseResult = await this.runTestCase(i, kubeconfig);
             result.push(testCaseResult);
         }
-        return Promise.all(result);
+        return result;
     }
 
     private async runTestCase(order: number, kubeconfig: string): Promise<LabResult> {
@@ -57,11 +69,13 @@ export class Results implements ResultsManager {
         const serverInstance = await this.portForward(values.port, kubeconfig, this.testCases[order].name);
 
         // wait for results
-        const results = await this.getResults(serverInstance.port);
+        const results = await this.getResults(serverInstance.port, this.testCases[order].delay || defaultDelay);
         this.logger.debug(`Results received: ${JSON.stringify(results)}`);
 
         serverInstance.server.close();
         serverInstance.server.unref();
+
+        await this.removeTestCase(order);
 
         return results;
     }
@@ -94,11 +108,21 @@ export class Results implements ResultsManager {
         return { server, port };
     }
 
-    private async getResults(port: number): Promise<LabResult> {
+    private async getResults(port: number, delay: number): Promise<LabResult> {
         const client = new Client(`ws://${localhost}:${port}`, this.logger);
         client.start();
-        await client.delay(40000);
+        await client.delay(delay);
 
         return client.requestStatus();
+    }
+
+    private async removeTestCase(order: number): Promise<void> {
+        const chart = new TestCaseChart(this.testCases[order], this.logger);
+
+        return this.helm.uninstallChart(chart.name());
+    }
+
+    private settlement() {
+        return new Promise(resolve => setTimeout(resolve, this.settlementTime));
     }
 }

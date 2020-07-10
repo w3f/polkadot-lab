@@ -7,6 +7,7 @@ import {
     Dependency,
     ChartManager
 } from '../types';
+import { mergeDeep } from '../utils';
 
 
 export class HelmClient implements HelmManager {
@@ -29,13 +30,17 @@ export class HelmClient implements HelmManager {
         chartCfg.values = values;
         if (dependency) {
             if (dependency.values) {
-                chartCfg.values = Object.assign(chartCfg.values, dependency.values);
+                chartCfg.values = mergeDeep(chartCfg.values, dependency.values);
             }
             if (dependency.version) {
                 chartCfg.version = dependency.version;
             }
         }
         await this.client.install(chartCfg);
+    }
+
+    async uninstallChart(name: string): Promise<void> {
+        return this.client.uninstall(name);
     }
 
     private async init(): Promise<void> {

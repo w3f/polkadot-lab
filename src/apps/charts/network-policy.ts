@@ -7,13 +7,23 @@ import {
 } from '../../types';
 import { BaseChart } from '../../helm';
 
+type NetworkPolicyChartConfig = {
+    topology: Topology;
+    size: number;
+    logger: Logger;
+}
 
 export class NetworkPolicyChart extends BaseChart implements ChartManager {
-    constructor(
-        private readonly topology: Topology,
-        private readonly size: number,
-        protected readonly logger: Logger) {
-        super(logger);
+    private topology: Topology;
+    private size: number;
+    protected logger: Logger;
+
+    constructor(config: NetworkPolicyChartConfig) {
+        super(config.logger);
+
+        this.topology = config.topology;
+        this.size = config.size;
+        this.logger = config.logger;
     }
 
     name(): string {

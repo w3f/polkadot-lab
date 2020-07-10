@@ -11,8 +11,8 @@ export enum Topology {
 
 export interface TestCaseDefinition {
     name: string;
-    dependency: Dependency;
-    config: TestCaseInputConfig;
+    dependency: TestCaseDependency;
+    delay: number;
 }
 
 export type TestCaseDefinitions = Array<TestCaseDefinition>;
@@ -41,32 +41,69 @@ export enum ExecutionMode {
     Remote = 'remote'
 }
 
-export interface Dependency {
+export interface BaseDependency {
     chart: string;
-    values?: any;
     version?: string;
 }
 
+export interface TestCaseDependency extends Dependency {
+    values?: TestCaseInputConfig;
+}
+
+export interface Dependency extends BaseDependency {
+    values?: any;
+}
+
 export type Dependencies = Array<Dependency>;
+
+export enum PersistenceKind {
+    File = 'file',
+    Database = 'database'
+}
+
+export interface FilePersistenceConfig {
+    kind: PersistenceKind.File;
+    path: string;
+}
+
+export interface DatabasePersistenceConfig {
+    kind: PersistenceKind.Database;
+}
+
+export type PersistenceConfig = FilePersistenceConfig | DatabasePersistenceConfig;
+
+export interface PersistenceManager {
+    saveResults(results: Array<LabResult>): Promise<void>;
+}
 
 export interface InputConfig {
     logLevel: string;
     maximumExecutionTime: string;
 
-    mode: ExecutionMode; // platform
-    size: number; // platform, apps
+    mode: ExecutionMode;
+    size: number;
 
-    topology: Topology; // apps
-    dependencies?: Dependencies; // apps
+    topology: Topology;
+    dependencies?: Dependencies;
 
-    targetStd: number; // results
-    testCases: TestCaseDefinitions; // results
+    testCases: TestCaseDefinitions;
+
+    persistence: PersistenceConfig;
+
+    settlementTime?: number;
+}
+
+export interface ResultsConfig {
+    settlementTime: number;
+    testCases: TestCaseDefinitions;
+    logger: Logger;
 }
 
 export interface EngineConfig {
     platform: PlatformManager;
     apps: ApplicationsManager;
     results: ResultsManager;
+    persistence: PersistenceManager;
     logger: Logger;
 }
 
@@ -77,6 +114,7 @@ export interface HelmManagerConfig {
 
 export interface HelmManager {
     installChart(chart: ChartManager, dependency?: Dependency): Promise<void>;
+    uninstallChart(name: string): Promise<void>;
 }
 
 export interface AppsConfig {
