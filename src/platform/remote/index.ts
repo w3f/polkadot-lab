@@ -3,6 +3,7 @@ import {
     Terraform,
     ModuleConfig
 } from '@w3f/terraform';
+import path from 'path';
 
 import { PlatformManager } from '../../types';
 
@@ -42,9 +43,10 @@ export class RemotePlatform implements PlatformManager {
             const cluster_name = this.name;
             const node_count = this.determineNodeCount();
             const machine_type = this.determineMachineType();
+            const moduleLocation = path.join(__dirname, 'modules', 'polkadot-lab');
 
             this.moduleCfg = {
-                moduleLocation: '',
+                moduleLocation,
                 vars: {
                     cluster_name,
                     node_count,
@@ -58,7 +60,7 @@ export class RemotePlatform implements PlatformManager {
         // one core per polkadot node and 2 more cores for additional services
         const requiredCores = this.size + 2;
 
-        return requiredCores / coresPerMachine + 1;
+        return Math.floor(requiredCores / coresPerMachine) + 1;
     }
 
     private determineMachineType(): string {
