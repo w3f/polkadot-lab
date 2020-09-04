@@ -13,7 +13,7 @@ describe('Platform', () => {
         const mode = ExecutionMode.Local;
         const nodes = 4;
 
-        const platform = new Platform(mode, nodes, logger);
+        const platform = new Platform('name', mode, nodes, logger);
 
         platform.should.exist;
     });
