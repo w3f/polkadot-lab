@@ -25,7 +25,8 @@ export class PolkadotBaseServicesChart extends BaseChart implements ChartManager
             benchmark: true,
             includeValidatorBootNode: false,
             createCertIssuer: false,
-            createBootNodeService: false
+            createBootNodeService: false,
+            createWebsocketsCertificate: false
         }
     }
 }
