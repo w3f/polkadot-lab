@@ -272,6 +272,13 @@
   dependencies:
     "@w3f/logger" "^0.3.0"
 
+"@w3f/cmd@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@w3f/cmd/-/cmd-0.4.0.tgz#bb410f8361e9c82b7fcad12c973da13dbaed4dbe"
+  integrity sha512-oAdDjSPEfysfthQEN356JzQDyPLM+fuxthkCeuJiGFPsw+OfVTkfVJK2drsa6kUykBx+MQWaGwvIMMbYlgFC9g==
+  dependencies:
+    "@w3f/logger" "^0.3.0"
+
 "@w3f/components@^0.4.0":
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/@w3f/components/-/components-0.4.0.tgz#506210a47b2b3beea8e0ef4975e27de3e1716d04"
@@ -371,6 +378,16 @@
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/@w3f/polkadot-lab-types/-/polkadot-lab-types-0.8.0.tgz#60a8dad44de522d2f19e07e0269bca302d744175"
   integrity sha512-MvIrMiB7Liu/epesqaN7yn+M4DWFiTGHsMGLtN8agjgnJzo+WVufVrkw4TgnqhO5YKSWgVTQyb4H9VcQRWGJJA==
+
+"@w3f/terraform@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@w3f/terraform/-/terraform-0.2.0.tgz#903869ff2deafc866bf1180a95e5b75f2593867f"
+  integrity sha512-zOsE1gPUWH7RQYCBgrnaNDauYq2s0VDnmAUdm0k26uQ6JIgnTvUxxkwtsaDm/rW8b7pE+n4Uu5rl/sIfjwVMew==
+  dependencies:
+    "@w3f/cmd" "^0.4.0"
+    "@w3f/logger" "^0.4.0"
+    fs-extra "^9.0.0"
+    tmp "^0.2.1"
 
 acorn-jsx@^5.2.0:
   version "5.2.0"
