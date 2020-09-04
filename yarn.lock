@@ -2774,6 +2774,11 @@ strict-uri-encode@^1.0.0:
   resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-1.1.0.tgz#279b225df1d582b1f54e65addd4352e18faa0713"
   integrity sha1-J5siXfHVgrH1TmWt3UNS4Y+qBxM=
 
+string-sanitizer@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/string-sanitizer/-/string-sanitizer-1.1.1.tgz#52d583fa639aefa01bc9a9d68cd4d53644cd85c5"
+  integrity sha512-ZaqlidMholFiBaKDPPVf9cJjNo6iRhP6g/ei5qTgvzKEMa8TK/nu4hM90YZ2LvfjvAomF2LIexmOlX1MvYN+ug==
+
 "string-width@^1.0.2 || 2":
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-2.1.1.tgz#ab93f27a8dc13d28cac815c462143a6d9012ae9e"
