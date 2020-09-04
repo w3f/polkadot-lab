@@ -10,7 +10,7 @@ export class Platform implements PlatformManager {
 
     constructor(
         private readonly mode: ExecutionMode,
-        private readonly nodes: number,
+        private readonly size: number,
         private readonly logger: Logger
     ) {
     }
@@ -39,7 +39,7 @@ export class Platform implements PlatformManager {
                     break;
                 }
                 case ExecutionMode.Remote: {
-                    this.strategy = new RemotePlatform(this.nodes, this.logger);
+                    this.strategy = new RemotePlatform(this.size, this.logger);
                     break;
                 }
                 default: {
