@@ -13,7 +13,7 @@ export async function startAction(cmd): Promise<void> {
     const cfg = new Config<InputConfig>().parse(cmd.config);
     const logger = createLogger(cfg.logLevel);
 
-    const platform = new Platform(cfg.mode, cfg.size, logger);
+    const platform = new Platform(cfg.name, cfg.mode, cfg.size, logger);
 
     const appCfg = {
         topology: cfg.topology,

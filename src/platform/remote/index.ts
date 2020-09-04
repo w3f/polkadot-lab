@@ -13,6 +13,7 @@ export class RemotePlatform implements PlatformManager {
     private moduleCfg: ModuleConfig;
 
     constructor(
+        private readonly name: string,
         private readonly size: number,
         private readonly logger: Logger) { }
 

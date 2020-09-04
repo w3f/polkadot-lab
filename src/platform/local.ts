@@ -2,28 +2,29 @@ import { Logger } from '@w3f/logger';
 import { Kind } from '@w3f/kind';
 
 import { PlatformManager } from '../types';
-import { ClusterName } from '../constants';
 
 
 export class LocalPlatform implements PlatformManager {
     private kind: Kind;
 
-    constructor(private readonly logger: Logger) { }
+    constructor(
+        private readonly name: string,
+        private readonly logger: Logger) { }
 
     async create(): Promise<void> {
         await this.init();
 
-        return this.kind.start(ClusterName);
+        return this.kind.start(this.name);
     }
     async destroy(): Promise<void> {
         await this.init();
 
-        return this.kind.stop(ClusterName);
+        return this.kind.stop(this.name);
     }
     async getKubeconfig(): Promise<string> {
         await this.init();
 
-        return this.kind.kubeconfig(ClusterName);
+        return this.kind.kubeconfig(this.name);
     }
 
     private async init(): Promise<void> {
