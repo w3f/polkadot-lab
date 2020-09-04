@@ -7,10 +7,12 @@ import { Platform } from '../platform';
 import { Apps } from '../apps';
 import { Results } from '../results';
 import { Persistence } from '../persistence';
+import { sanitize } from '../sanitize';
 
 
 export async function startAction(cmd): Promise<void> {
-    const cfg = new Config<InputConfig>().parse(cmd.config);
+    const inputCfg = new Config<InputConfig>().parse(cmd.config);
+    const cfg = sanitize(inputCfg);
     const logger = createLogger(cfg.logLevel);
 
     const platform = new Platform(cfg.name, cfg.mode, cfg.size, logger);
