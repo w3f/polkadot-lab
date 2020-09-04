@@ -5,7 +5,6 @@ import {
 } from '@w3f/terraform';
 
 import { PlatformManager } from '../../types';
-import { ClusterName } from '../../constants';
 
 
 export class RemotePlatform implements PlatformManager {
