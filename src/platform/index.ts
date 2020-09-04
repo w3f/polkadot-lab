@@ -2,6 +2,7 @@ import { Logger } from '@w3f/logger';
 
 import { ExecutionMode, PlatformManager } from '../types';
 import { LocalPlatform } from './local';
+import { RemotePlatform } from './remote';
 
 
 export class Platform implements PlatformManager {
@@ -35,6 +36,10 @@ export class Platform implements PlatformManager {
             switch (this.mode) {
                 case ExecutionMode.Local: {
                     this.strategy = new LocalPlatform(this.logger);
+                    break;
+                }
+                case ExecutionMode.Remote: {
+                    this.strategy = new RemotePlatform(this.nodes, this.logger);
                     break;
                 }
                 default: {

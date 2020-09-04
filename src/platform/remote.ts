@@ -12,7 +12,9 @@ export class RemotePlatform implements PlatformManager {
     private terraform: Terraform;
     private moduleCfg: ModuleConfig;
 
-    constructor(private readonly logger: Logger) { }
+    constructor(
+        private readonly nodes: number,
+        private readonly logger: Logger) { }
 
     async create(): Promise<void> {
         await this.init();
