@@ -6,6 +6,8 @@ import {
 
 import { PlatformManager } from '../../types';
 
+const coresPerMachine = 80;
+
 
 export class RemotePlatform implements PlatformManager {
     private terraform: Terraform;
@@ -36,10 +38,30 @@ export class RemotePlatform implements PlatformManager {
     private async init(): Promise<void> {
         if (!this.terraform) {
             this.terraform = await Terraform.create(this.logger);
+
+            const cluster_name = this.name;
+            const node_count = this.determineNodeCount();
+            const machine_type = this.determineMachineType();
+
             this.moduleCfg = {
                 moduleLocation: '',
-                vars: {}
+                vars: {
+                    cluster_name,
+                    node_count,
+                    machine_type
+                }
             }
         }
+    }
+
+    private determineNodeCount(): number {
+        // one core per polkadot node and 2 more cores for additional services
+        const requiredCores = this.size + 2;
+
+        return requiredCores / coresPerMachine + 1;
+    }
+
+    private determineMachineType(): string {
+        return `n2d-standard-${coresPerMachine}`;
     }
 }
