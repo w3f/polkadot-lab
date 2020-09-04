@@ -9,6 +9,7 @@ should();
 const outputFile = tmp.fileSync();
 const nodes = 4;
 const cfgContent = `
+name: 'e2e-test'
 logLevel: 'debug'
 maximumExecutionTime: '60m'
 mode: local
