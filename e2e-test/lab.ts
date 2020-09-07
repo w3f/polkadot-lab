@@ -9,6 +9,7 @@ should();
 const outputFile = tmp.fileSync();
 const nodes = 4;
 const cfgContent = `
+name: 'e2e-test'
 logLevel: 'debug'
 maximumExecutionTime: '60m'
 mode: local
@@ -44,12 +45,14 @@ dependencies:
   values:
     image:
       repo: 'parity/polkadot'
-      tag: 'v0.8.13'
+      tag: 'v0.8.23'
     chainspec:
       preset: true
       custom: false
       name: 'kusama-dev'
-  version: 'v0.27.3'
+  version: 'v0.32.2'
+- chart: w3f/polkadot-base-services
+  version: 'v0.32.2'
 `;
 
 let result: object;

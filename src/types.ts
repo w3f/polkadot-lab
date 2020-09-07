@@ -77,6 +77,7 @@ export interface PersistenceManager {
 }
 
 export interface InputConfig {
+    name: string;
     logLevel: string;
     maximumExecutionTime: string;
 

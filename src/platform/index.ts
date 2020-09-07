@@ -2,14 +2,16 @@ import { Logger } from '@w3f/logger';
 
 import { ExecutionMode, PlatformManager } from '../types';
 import { LocalPlatform } from './local';
+import { RemotePlatform } from './remote';
 
 
 export class Platform implements PlatformManager {
     private strategy: PlatformManager;
 
     constructor(
+        private readonly name: string,
         private readonly mode: ExecutionMode,
-        private readonly nodes: number,
+        private readonly size: number,
         private readonly logger: Logger
     ) {
     }
@@ -34,7 +36,11 @@ export class Platform implements PlatformManager {
         if (!this.strategy) {
             switch (this.mode) {
                 case ExecutionMode.Local: {
-                    this.strategy = new LocalPlatform(this.logger);
+                    this.strategy = new LocalPlatform(this.name, this.logger);
+                    break;
+                }
+                case ExecutionMode.Remote: {
+                    this.strategy = new RemotePlatform(this.name, this.size, this.logger);
                     break;
                 }
                 default: {
