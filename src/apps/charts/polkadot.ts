@@ -2,7 +2,7 @@ import { ChartConfig } from '@w3f/helm';
 import { Crypto, KeyTypes, KeysBundle } from '@w3f/crypto';
 import { Logger } from '@w3f/logger';
 
-import { ChartManager } from '../../types';
+import { OrderedChartManager } from '../../types';
 import { BaseChart } from '../../helm';
 import { mergeDeep } from '../../utils';
 
@@ -11,7 +11,7 @@ const nodeKey = '000000000000000000000000000000000000000000000000000000000000000
 const bootNode = '/dns4/polkadot-0-p2p/tcp/30333/p2p/12D3KooWDpJ7As7BWAwRMfu1VU2WCqNjvq387JEYKDBj4kx6nXTN';
 
 
-export class PolkadotChart extends BaseChart implements ChartManager {
+export class PolkadotChart extends BaseChart implements OrderedChartManager {
     private commonValues: any;
     private index = 0;
     private keys: KeysBundle;
@@ -21,6 +21,10 @@ export class PolkadotChart extends BaseChart implements ChartManager {
         protected readonly logger: Logger
     ) {
         super(logger);
+    }
+
+    setIndex(index: number): void {
+        this.index = index;
     }
 
     async cfg(): Promise<ChartConfig> {
@@ -65,8 +69,6 @@ export class PolkadotChart extends BaseChart implements ChartManager {
         } else {
             values['extraBootnodes'] = [bootNode];
         }
-
-        this.index++;
 
         return mergeDeep(this.commonValues, values);
     }

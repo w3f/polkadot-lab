@@ -88,8 +88,9 @@ export class Apps implements ApplicationsManager {
 
     private async installNodes(): Promise<void> {
         const chart = new PolkadotChart(this.size, this.logger);
+        const dependency = this.findDependency(chart.name());
         for (let i = 0; i < this.size; i++) {
-            const dependency = this.findDependency(chart.name());
+            chart.setIndex(i);
             await this.helm.installChart(chart, dependency);
         }
     }
