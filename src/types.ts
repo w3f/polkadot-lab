@@ -125,6 +125,10 @@ export interface AppsConfig {
     logger: Logger;
 }
 
+export interface OrderedChartManager extends ChartManager {
+    setIndex(index: number): void;
+}
+
 export interface ChartManager {
     name(): string;
     cfg(): Promise<ChartConfig>;
