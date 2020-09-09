@@ -113,9 +113,9 @@ export class PolkadotChart extends BaseChart implements OrderedChartManager {
     }
 
     private networkingArgs(): string {
-        const reservedPeers = this.networkingUtils.reservedPeers(this.index);
+        let reservedPeers = this.networkingUtils.reservedPeers(this.index);
 
-        reservedPeers.map((el) => `--reserved-nodes=${el}`);
+        reservedPeers = reservedPeers.map((el) => `--reserved-nodes=${el}`);
 
         return reservedPeers.join(' ');
     }
