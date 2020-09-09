@@ -67,7 +67,7 @@ export class PolkadotChart extends BaseChart implements OrderedChartManager {
             values['createConfigMap'] = true;
             values['extraArgs']['validator'] = '--alice';
         }
-        values['nodeKey'] = this.nodeKey(this.index);
+        values['nodeKey'] = this.networkingUtils.nodeKey(this.index);
 
         values['extraArgs']['common'] = `--reserved-only ${this.networkingArgs()}`;
 
@@ -103,13 +103,6 @@ export class PolkadotChart extends BaseChart implements OrderedChartManager {
                 }
             }
         };
-    }
-
-    private nodeKey(index: number): string {
-        const nodeKeyLength = 64;
-        const end = `${index}`;
-
-        return end.padStart(nodeKeyLength - end.length, "0");
     }
 
     private networkingArgs(): string {
