@@ -10,11 +10,16 @@ export const baseP2PPort = 30333;
 export class NetworkingUtils {
     constructor(
         protected readonly size: number,
+        protected topology: Topology,
         protected readonly logger?: Logger
     ) {
         if (!logger) {
             this.logger = createLogger();
         }
+    }
+
+    setTopology(topology: Topology): void {
+        this.topology = topology;
     }
 
     multiAddr(index: number): string {
@@ -29,8 +34,8 @@ export class NetworkingUtils {
         return index + baseP2PPort;
     }
 
-    reservedPeers(index: number, topology: Topology): Array<string> {
-        switch (topology) {
+    reservedPeers(index: number): Array<string> {
+        switch (this.topology) {
             case Topology.Circle:
                 return this.circleReservedPeers(index);
             case Topology.Line:
@@ -58,7 +63,6 @@ export class NetworkingUtils {
                 this.multiAddr(index + 1),
             ];
         }
-
         return output.sort();
     }
 
@@ -78,7 +82,6 @@ export class NetworkingUtils {
                 this.multiAddr(index + 1),
             ];
         }
-
         return output.sort();
     }
 
@@ -89,7 +92,6 @@ export class NetworkingUtils {
                 output.push(this.multiAddr(i));
             }
         }
-
         return output.sort();
     }
 }

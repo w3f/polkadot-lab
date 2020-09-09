@@ -12,7 +12,7 @@ should();
 
 
 const size = 4;
-const subject = new NetworkingUtils(size);
+const subject = new NetworkingUtils(size, Topology.Line);
 
 interface CheckCfg {
     index: number;
@@ -21,7 +21,9 @@ interface CheckCfg {
 }
 
 const checkReservedPeers = (cfg: CheckCfg) => {
-    const actual = subject.reservedPeers(cfg.index, cfg.topology);
+    subject.setTopology(cfg.topology);
+
+    const actual = subject.reservedPeers(cfg.index);
 
     actual.should.deep.eq(cfg.expected);
 }
