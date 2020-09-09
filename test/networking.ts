@@ -85,19 +85,69 @@ describe('NetworkUtils', () => {
                 ]
             });
         });
-        /*
+
         it('should return reserved peers for line topology for first element', () => {
+            checkReservedPeers({
+                index: 0,
+                topology: Topology.Line,
+                expected: [
+                    '/dns4/polkadot-1-p2p/tcp/30334',
+                ]
+            });
         });
+
         it('should return reserved peers for line topology for last element', () => {
+            checkReservedPeers({
+                index: size - 1,
+                topology: Topology.Line,
+                expected: [
+                    '/dns4/polkadot-2-p2p/tcp/30335',
+                ]
+            });
         });
         it('should return reserved peers for line topology for middle element', () => {
+            checkReservedPeers({
+                index: 2,
+                topology: Topology.Line,
+                expected: [
+                    '/dns4/polkadot-1-p2p/tcp/30334',
+                    '/dns4/polkadot-3-p2p/tcp/30336'
+                ]
+            });
         });
+
         it('should return reserved peers for full topology for first element', () => {
+            checkReservedPeers({
+                index: 0,
+                topology: Topology.Full,
+                expected: [
+                    '/dns4/polkadot-1-p2p/tcp/30334',
+                    '/dns4/polkadot-2-p2p/tcp/30335',
+                    '/dns4/polkadot-3-p2p/tcp/30336'
+                ]
+            });
         });
         it('should return reserved peers for full topology for last element', () => {
+            checkReservedPeers({
+                index: size - 1,
+                topology: Topology.Full,
+                expected: [
+                    '/dns4/polkadot-0-p2p/tcp/30333',
+                    '/dns4/polkadot-1-p2p/tcp/30334',
+                    '/dns4/polkadot-2-p2p/tcp/30335'
+                ]
+            });
         });
         it('should return reserved peers for full topology for middle element', () => {
+            checkReservedPeers({
+                index: 2,
+                topology: Topology.Full,
+                expected: [
+                    '/dns4/polkadot-0-p2p/tcp/30333',
+                    '/dns4/polkadot-1-p2p/tcp/30334',
+                    '/dns4/polkadot-3-p2p/tcp/30336'
+                ]
+            });
         });
-        */
     });
 });
