@@ -23,11 +23,21 @@ describe('NetworkUtils', () => {
             actual.should.eq(expected);
         });
     });
-    /*
+
     describe('p2pPort', () => {
         it('should return consecutive p2pPorts', () => {
+            const port1 = subject.p2pPort(0);
+            const port2 = subject.p2pPort(1);
+
+            const expectedDifference = 1;
+
+            const actualDifference = port2 - port1;
+
+            actualDifference.should.eq(expectedDifference);
         });
     });
+
+    /*
     describe('reservedPeers', () => {
         it('should return reserved peers for circle topology for first element ', () => {
         });
