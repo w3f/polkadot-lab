@@ -63,10 +63,33 @@ export class NetworkingUtils {
     }
 
     private lineReservedPeers(index: number): Array<string> {
-        return [];
+        let output = [];
+        if (index === 0) {
+            output = [
+                this.multiAddr(1),
+            ];
+        } else if (index === this.size - 1) {
+            output = [
+                this.multiAddr(index - 1),
+            ];
+        } else {
+            output = [
+                this.multiAddr(index - 1),
+                this.multiAddr(index + 1),
+            ];
+        }
+
+        return output.sort();
     }
 
     private fullReservedPeers(index: number): Array<string> {
-        return [];
+        const output = [];
+        for (let i = 0; i < this.size; i++) {
+            if (i !== index) {
+                output.push(this.multiAddr(i));
+            }
+        }
+
+        return output.sort();
     }
 }
