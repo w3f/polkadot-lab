@@ -25,10 +25,17 @@ const checkReservedPeers = (cfg: CheckCfg) => {
 
     const actual = subject.reservedPeers(cfg.index);
 
-    actual.should.deep.eq(cfg.expected);
+    for (let i = 0; i < actual.length; i++) {
+        actual[i].substring(0, cfg.expected[i].length).should.eq(cfg.expected[i]);
+    }
+
 }
 
 describe('NetworkUtils', () => {
+    before(async () => {
+        await subject.setup();
+    });
+
     describe('multiAddr', () => {
         it('should return a multiaddr depending on an index', () => {
             const index = 1;
@@ -37,7 +44,7 @@ describe('NetworkUtils', () => {
 
             const actual = subject.multiAddr(index);
 
-            actual.should.eq(expected);
+            actual.substring(0, expected.length).should.eq(expected);
         });
     });
 
