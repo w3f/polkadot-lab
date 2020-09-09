@@ -89,6 +89,7 @@ export class Apps implements ApplicationsManager {
 
     private async installNodes(): Promise<void> {
         const networkingUtils = new NetworkingUtils(this.size, this.topology);
+        await networkingUtils.setup();
 
         const chart = new PolkadotChart(networkingUtils, this.size, this.logger);
         const dependency = this.findDependency(chart.name());
