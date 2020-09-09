@@ -9,6 +9,7 @@ export const baseP2PPort = 30333;
 
 export class NetworkingUtils {
     constructor(
+        protected readonly size: number,
         protected readonly logger?: Logger
     ) {
         if (!logger) {
@@ -28,26 +29,44 @@ export class NetworkingUtils {
         return index + baseP2PPort;
     }
 
-    reservedPeers(index: number, size: number, topology: Topology): string {
+    reservedPeers(index: number, topology: Topology): Array<string> {
         switch (topology) {
             case Topology.Circle:
-                return this.circleReservedPeers(index, size);
+                return this.circleReservedPeers(index);
             case Topology.Line:
-                return this.lineReservedPeers(index, size);
+                return this.lineReservedPeers(index);
             case Topology.Full:
-                return this.fullReservedPeers(index, size);
+                return this.fullReservedPeers(index);
         }
     }
 
-    private circleReservedPeers(index: number, size: number): string {
-        return '';
+    private circleReservedPeers(index: number): Array<string> {
+        let output = [];
+        if (index === 0) {
+            output = [
+                this.multiAddr(this.size - 1),
+                this.multiAddr(1),
+            ];
+        } else if (index === this.size - 1) {
+            output = [
+                this.multiAddr(0),
+                this.multiAddr(index - 1),
+            ];
+        } else {
+            output = [
+                this.multiAddr(index - 1),
+                this.multiAddr(index + 1),
+            ];
+        }
+
+        return output.sort();
     }
 
-    private lineReservedPeers(index: number, size: number): string {
-        return '';
+    private lineReservedPeers(index: number): Array<string> {
+        return [];
     }
 
-    private fullReservedPeers(index: number, size: number): string {
-        return '';
+    private fullReservedPeers(index: number): Array<string> {
+        return [];
     }
 }
