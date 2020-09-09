@@ -1,4 +1,5 @@
 import { Logger, createLogger } from '@w3f/logger';
+import crypto from '@w3f/libp2p-crypto';
 
 import {
     Topology
@@ -7,7 +8,14 @@ import {
 
 export const baseP2PPort = 30333;
 
+interface NodeInfo {
+    nodeKey: string;
+    peerId: string;
+}
+
 export class NetworkingUtils {
+    private nodeListInfo: Array<NodeInfo>
+
     constructor(
         protected readonly size: number,
         protected topology: Topology,
@@ -16,18 +24,23 @@ export class NetworkingUtils {
         if (!logger) {
             this.logger = createLogger();
         }
+
+        this.nodeListInfo = new Array(this.size);
     }
 
     setTopology(topology: Topology): void {
         this.topology = topology;
     }
 
+    nodeKey(index: number): string {
+        return this.nodeListInfo[index].nodeKey;
+    }
+
     multiAddr(index: number): string {
         const p2pPort = this.p2pPort(index);
-        //const peerID = '12D3KooWDpJ7As7BWAwRMfu1VU2WCqNjvq387JEYKDBj4kx6nXTN';
-        //return `/dns4/polkadot-${index}-p2p/tcp/${p2pPort}/p2p/${peerID}`;
+        const peerId = this.nodeListInfo[index].peerId;
 
-        return `/dns4/polkadot-${index}-p2p/tcp/${p2pPort}`;
+        return `/dns4/polkadot-${index}-p2p/tcp/${p2pPort}/p2p/${peerId}`;
     }
 
     p2pPort(index: number): number {
@@ -93,5 +106,30 @@ export class NetworkingUtils {
             }
         }
         return output.sort();
+    }
+
+    async setup(): Promise<void> {
+        for (let i = 0; i < this.size; i++) {
+            this.nodeListInfo[i] = await this.initializeNodeInfo();
+        }
+    }
+
+    private async initializeNodeInfo(): Promise<NodeInfo> {
+        return new Promise((resolve, reject) => {
+            crypto.keys.generateKeyPair('ed25519', 128, (err, key) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                const nodeKey = key.bytes.toString('hex').substr(8, 64);
+                key.id((err, peerId) => {
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+                    resolve({ nodeKey, peerId });
+                })
+            })
+        });
     }
 }
