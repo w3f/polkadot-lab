@@ -5,11 +5,26 @@ import {
     baseP2PPort
 } from '../src/networking';
 import {
+    Topology
 } from '../src/types';
 
 should();
 
-const subject = new NetworkingUtils();
+
+const size = 4;
+const subject = new NetworkingUtils(size);
+
+interface CheckCfg {
+    index: number;
+    topology: Topology;
+    expected: Array<string>;
+}
+
+const checkReservedPeers = (cfg: CheckCfg) => {
+    const actual = subject.reservedPeers(cfg.index, cfg.topology);
+
+    actual.should.deep.eq(cfg.expected);
+}
 
 describe('NetworkUtils', () => {
     describe('multiAddr', () => {
@@ -37,14 +52,40 @@ describe('NetworkUtils', () => {
         });
     });
 
-    /*
     describe('reservedPeers', () => {
         it('should return reserved peers for circle topology for first element ', () => {
+            checkReservedPeers({
+                index: 0,
+                topology: Topology.Circle,
+                expected: [
+                    '/dns4/polkadot-1-p2p/tcp/30334',
+                    '/dns4/polkadot-3-p2p/tcp/30336'
+                ]
+            });
         });
+
         it('should return reserved peers for circle topology for last element ', () => {
+            checkReservedPeers({
+                index: size - 1,
+                topology: Topology.Circle,
+                expected: [
+                    '/dns4/polkadot-0-p2p/tcp/30333',
+                    '/dns4/polkadot-2-p2p/tcp/30335'
+                ]
+            });
         });
+
         it('should return reserved peers for circle topology for middle element ', () => {
+            checkReservedPeers({
+                index: 2,
+                topology: Topology.Circle,
+                expected: [
+                    '/dns4/polkadot-1-p2p/tcp/30334',
+                    '/dns4/polkadot-3-p2p/tcp/30336'
+                ]
+            });
         });
+        /*
         it('should return reserved peers for line topology for first element', () => {
         });
         it('should return reserved peers for line topology for last element', () => {
@@ -57,6 +98,6 @@ describe('NetworkUtils', () => {
         });
         it('should return reserved peers for full topology for middle element', () => {
         });
+        */
     });
-    */
 });
