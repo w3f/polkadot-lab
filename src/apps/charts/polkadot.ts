@@ -2,13 +2,12 @@ import { ChartConfig } from '@w3f/helm';
 import { Crypto, KeyTypes, KeysBundle } from '@w3f/crypto';
 import { Logger } from '@w3f/logger';
 
-import { OrderedChartManager } from '../../types';
+import {
+    OrderedChartManager
+} from '../../types';
 import { BaseChart } from '../../helm';
 import { mergeDeep } from '../../utils';
-
-const baseP2PPort = 30333;
-const nodeKey = '0000000000000000000000000000000000000000000000000000000000000000';
-const bootNode = '/dns4/polkadot-0-p2p/tcp/30333/p2p/12D3KooWDpJ7As7BWAwRMfu1VU2WCqNjvq387JEYKDBj4kx6nXTN';
+import { NetworkingUtils } from '../../networking';
 
 
 export class PolkadotChart extends BaseChart implements OrderedChartManager {
@@ -17,6 +16,7 @@ export class PolkadotChart extends BaseChart implements OrderedChartManager {
     private keys: KeysBundle;
 
     constructor(
+        private readonly networkingUtils: NetworkingUtils,
         private readonly size: number,
         protected readonly logger: Logger
     ) {
@@ -48,6 +48,7 @@ export class PolkadotChart extends BaseChart implements OrderedChartManager {
             this.initCommonValues();
         }
 
+        const p2pPort = this.networkingUtils.p2pPort(this.index);
         const values = {
             name: `polkadot-${this.index}`,
             keys: {
@@ -57,18 +58,18 @@ export class PolkadotChart extends BaseChart implements OrderedChartManager {
                 session_imonline: this.keys[KeyTypes.Imonline][this.index].seed,
                 session_parachain: this.keys[KeyTypes.Parachain][this.index].seed,
             },
-            p2pPort: this.index + baseP2PPort,
+            p2pPort,
         };
         values['createConfigMap'] = false;
+        values['extraArgs'] = {};
+
         if (this.index === 0) {
             values['createConfigMap'] = true;
-            values['extraArgs'] = {
-                validator: "--alice"
-            };
-            values['nodeKey'] = nodeKey;
-        } else {
-            values['extraBootnodes'] = [bootNode];
+            values['extraArgs']['validator'] = '--alice';
         }
+        values['nodeKey'] = this.nodeKey(this.index);
+
+        values['extraArgs']['common'] = `--reserved-only ${this.networkingArgs()}`;
 
         return mergeDeep(this.commonValues, values);
     }
@@ -102,5 +103,20 @@ export class PolkadotChart extends BaseChart implements OrderedChartManager {
                 }
             }
         };
+    }
+
+    private nodeKey(index: number): string {
+        const nodeKeyLength = 64;
+        const end = `${index}`;
+
+        return end.padStart(nodeKeyLength - end.length, "0");
+    }
+
+    private networkingArgs(): string {
+        const reservedPeers = this.networkingUtils.reservedPeers(this.index);
+
+        reservedPeers.map((el) => `--reserved-nodes=${el}`);
+
+        return reservedPeers.join(' ');
     }
 }

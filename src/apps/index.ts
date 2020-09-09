@@ -16,6 +16,7 @@ import {
     SubstrateTelemetryChart
 } from './charts';
 import { HelmClient } from '../helm';
+import { NetworkingUtils } from '../networking';
 
 type ChartClass = (
     typeof NetworkPolicyChart |
@@ -87,7 +88,9 @@ export class Apps implements ApplicationsManager {
     }
 
     private async installNodes(): Promise<void> {
-        const chart = new PolkadotChart(this.size, this.logger);
+        const networkingUtils = new NetworkingUtils(this.size, this.topology);
+
+        const chart = new PolkadotChart(networkingUtils, this.size, this.logger);
         const dependency = this.findDependency(chart.name());
         for (let i = 0; i < this.size; i++) {
             chart.setIndex(i);
