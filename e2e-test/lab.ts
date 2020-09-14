@@ -45,6 +45,12 @@ testCases:
 dependencies:
 - chart: w3f/substrate-telemetry
   version: 'v2.2.0'
+  values:
+    exporter:
+      config:
+        subcribe:
+          chains:
+          - testnet
 - chart: w3f/polkadot
   values:
     image:
@@ -52,7 +58,7 @@ dependencies:
       tag: 'v0.8.23'
   version: 'v0.33.0'
 - chart: w3f/polkadot-base-services
-  version: 'v0.32.2'
+  version: 'v0.33.0'
 `;
 
 let result: object;
