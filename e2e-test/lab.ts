@@ -50,11 +50,7 @@ dependencies:
     image:
       repo: 'parity/polkadot'
       tag: 'v0.8.23'
-    chainspec:
-      preset: true
-      custom: false
-      name: 'kusama-dev'
-  version: 'v0.32.2'
+  version: 'v0.33.0'
 - chart: w3f/polkadot-base-services
   version: 'v0.32.2'
 `;
