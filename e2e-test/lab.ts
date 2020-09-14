@@ -26,18 +26,22 @@ testCases:
     chart: w3f/polkadot-lab-test-case-prometheus
     version: "v0.1.0"
     values:
+      logLevel: debug
       prometheus:
         name: number-of-peers
         query: polkadot_sub_libp2p_peers_count
+        period: 5000
 - name: test-case-time-to-finality
   delay: 120000
   dependency:
     chart: w3f/polkadot-lab-test-case-prometheus
     version: "v0.1.0"
     values:
+      logLevel: debug
       prometheus:
         name: time-to-finality
         query: rate(polkadot_block_finality_seconds_sum[1m])/rate(polkadot_block_finality_seconds_count[1m])
+        period: 5000
 dependencies:
 - chart: w3f/substrate-telemetry
   version: 'v2.2.0'

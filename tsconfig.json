@@ -9,14 +9,16 @@
     "outDir": "./dist",
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "typeRoots": [ "./types", "./node_modules/@types"]
   },
   "exclude": [
     "node_modules",
     "**/*.spec.ts",
     "test/**/*",
     "e2e-test/**/*",
-    "dist/**/*"
+    "dist/**/*",
+    "types"
   ],
   "_comment": "The Polkadot Lab App contains typescript errors"
 }
