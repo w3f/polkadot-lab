@@ -48,7 +48,7 @@ dependencies:
   values:
     exporter:
       config:
-        subcribe:
+        subscribe:
           chains:
           - testnet
 - chart: w3f/polkadot
