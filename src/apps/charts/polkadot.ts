@@ -65,7 +65,6 @@ export class PolkadotChart extends BaseChart implements OrderedChartManager {
 
         if (this.index === 0) {
             values['createConfigMap'] = true;
-            values['extraArgs']['validator'] = '--alice';
         }
         values['nodeKey'] = this.networkingUtils.nodeKey(this.index);
 

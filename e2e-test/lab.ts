@@ -21,7 +21,7 @@ persistence:
 settlementTime: 20000
 testCases:
 - name: test-case-number-of-peers
-  delay: 120000
+  delay: 140000
   dependency:
     chart: w3f/polkadot-lab-test-case-prometheus
     version: "v0.1.0"
@@ -45,18 +45,20 @@ testCases:
 dependencies:
 - chart: w3f/substrate-telemetry
   version: 'v2.2.0'
+  values:
+    exporter:
+      config:
+        subscribe:
+          chains:
+          - testnet
 - chart: w3f/polkadot
   values:
     image:
       repo: 'parity/polkadot'
       tag: 'v0.8.23'
-    chainspec:
-      preset: true
-      custom: false
-      name: 'kusama-dev'
-  version: 'v0.32.2'
+  version: 'v0.33.0'
 - chart: w3f/polkadot-base-services
-  version: 'v0.32.2'
+  version: 'v0.33.0'
 `;
 
 let result: object;
