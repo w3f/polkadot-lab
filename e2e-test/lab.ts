@@ -21,7 +21,7 @@ persistence:
 settlementTime: 20000
 testCases:
 - name: test-case-number-of-peers
-  delay: 120000
+  delay: 140000
   dependency:
     chart: w3f/polkadot-lab-test-case-prometheus
     version: "v0.1.0"
