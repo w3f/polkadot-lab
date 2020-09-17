@@ -109,7 +109,7 @@ only local file persistence is implemented, and has this fields:
 * `settlementTime`: number of seconds to wait before starting the tests when the
 network has been created.
 
-You can check a complete example configuration [here](./e2e-test/lab.ts#L12-#L61)
+You can see a sample a complete example configuration [here](./config/main.sample.yaml).
 
 #### Test cases
 
