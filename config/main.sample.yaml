@@ -1,26 +1,50 @@
-logLevel: 'info'
+name: 'e2e-test'
+logLevel: 'debug'
 maximumExecutionTime: '60m'
-mode: Local
+mode: local
 size: 4
-topology: Line
+topology: line
 persistence:
   kind: file
-  path: /tmp/polkadot-lab.json
+  path: /tmp/polkadot-lab.output
 settlementTime: 20000
 testCases:
 - name: test-case-number-of-peers
+  delay: 140000
+  dependency:
+    chart: w3f/polkadot-lab-test-case-prometheus
+    version: "v0.1.0"
+    values:
+      logLevel: debug
+      prometheus:
+        name: number-of-peers
+        query: polkadot_sub_libp2p_peers_count
+        period: 5000
+- name: test-case-time-to-finality
   delay: 120000
   dependency:
     chart: w3f/polkadot-lab-test-case-prometheus
     version: "v0.1.0"
     values:
+      logLevel: debug
       prometheus:
-        name: number-of-peers
-        query: polkadot_sub_libp2p_peers_count
+        name: time-to-finality
+        query: rate(polkadot_block_finality_seconds_sum[1m])/rate(polkadot_block_finality_seconds_count[1m])
+        period: 5000
 dependencies:
+- chart: w3f/substrate-telemetry
+  version: 'v2.2.0'
+  values:
+    exporter:
+      config:
+        subscribe:
+          chains:
+          - testnet
 - chart: w3f/polkadot
-  version: 'v0.27.3'
   values:
     image:
       repo: 'parity/polkadot'
-      tag: 'v0.8.12'
+      tag: 'v0.8.23'
+  version: 'v0.33.0'
+- chart: w3f/polkadot-base-services
+  version: 'v0.33.0'
