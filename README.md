@@ -91,12 +91,33 @@ the following fields:
 * `size`: number of nodes that will form the Substrate network. Each of them
 will be a validator in the testnet.
 * `topology`: how are the nodes connected, the values supported currently are
+`line` (nodes connected forming a line), `circle` (nodes connecteed forming a
+circle) and `full` (all nodes connected with each other).
+* `dependencies`: array with settings for additional apps to install, each of them
+has these fields:
+  * `chart`: name of the chart to install.
+  * `version`: version of the chart, if not present installs the latest version.
+  * `values`: values to set specific options in the chart.
+* `testCases`: array of tests to execute, each of them composed of:
+  * `name`: test case identifier.
+  * `dependency`: same as each of the elements in the `dependencies` field above.
+  * `delay`: number of seconds to wait before starting the test case.
+* `persistence`: defines how to store experiment requests and results. Currently
+only local file persistence is implemented, and has this fields:
+  * `kind`: currently only `file`.
+  * `path`: path to the file to store the results.
+* `settlementTime`: number of seconds to wait before starting the tests when the
+network has been created.
 
-The Engine component receives experiments as input
+You can check a complete example configuration [here](./e2e-test/lab.ts#L12-#L61)
 
 #### Test cases
 
+TODO
+
 ### Data structures
+
+TODO
 
 ### Remote Execution
 
@@ -106,5 +127,6 @@ can work, currently only GCP is supported see [here](https://www.terraform.io/do
 general configuration. Your service account should have at least `Kubernetes
 Engine Admin` role, see [here](https://cloud.google.com/iam/docs/granting-changing-revoking-access) for information about how to grant this permission.
 
-
 ### Workflow
+
+TODO
