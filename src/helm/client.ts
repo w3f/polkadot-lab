@@ -52,10 +52,10 @@ export class HelmClient implements HelmManager {
                     url: 'https://w3f.github.io/helm-charts'
                 },
                 {
-                    name: 'stable',
-                    url: 'https://kubernetes-charts.storage.googleapis.com/'
+                    name: 'prometheus-community',
+                    url: 'https://prometheus-community.github.io/helm-charts'
                 }
-            ]);
+            ],true);
         }
     }
 }

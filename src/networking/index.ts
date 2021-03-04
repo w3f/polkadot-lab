@@ -1,4 +1,5 @@
 import { Logger, createLogger } from '@w3f/logger';
+import multihashes from 'multihashes'
 import crypto from '@w3f/libp2p-crypto';
 
 import {
@@ -115,21 +116,17 @@ export class NetworkingUtils {
     }
 
     private async initializeNodeInfo(): Promise<NodeInfo> {
-        return new Promise((resolve, reject) => {
-            crypto.keys.generateKeyPair('ed25519', 128, (err, key) => {
-                if (err) {
-                    reject(err);
-                    return;
-                }
-                const nodeKey = key.bytes.toString('hex').substr(8, 64);
-                key.id((err, peerId) => {
-                    if (err) {
-                        reject(err);
-                        return;
-                    }
-                    resolve({ nodeKey, peerId });
-                })
-            })
-        });
-    }
+      return new Promise((resolve, reject) => {
+          crypto.keys.generateKeyPair('ed25519', 128, (err, key) => {
+              if (err) {
+                  reject(err);
+                  return;
+              }
+              const nodeKey = key.bytes.toString('hex').substr(8, 64);
+              const ipeerIdBytes = multihashes.encode(key.public.bytes,"identity")
+              const peerId = multihashes.toB58String(ipeerIdBytes)
+              resolve({ nodeKey, peerId });
+          })
+      });
+  }
 }

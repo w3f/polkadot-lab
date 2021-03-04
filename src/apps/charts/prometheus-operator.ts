@@ -6,19 +6,21 @@ import { BaseChart } from '../../helm';
 
 export class PrometheusOperatorChart extends BaseChart implements ChartManager {
     name(): string {
-        return 'stable/prometheus-operator';
+        return 'prometheus-community/kube-prometheus-stack';
     }
 
     async cfg(): Promise<ChartConfig> {
         return {
             name: 'prometheus-operator',
-            chart: 'stable/prometheus-operator',
+            chart: 'prometheus-community/kube-prometheus-stack',
             wait: true
         };
     }
 
     async values(): Promise<any> {
         return {
+            nameOverride: (await this.cfg()).name,
+            fullnameOverride: (await this.cfg()).name,
             defaultRules: {
                 create: false
             },
