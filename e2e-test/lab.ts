@@ -44,7 +44,7 @@ testCases:
         period: 5000
 dependencies:
 - chart: w3f/substrate-telemetry
-  version: 'v2.2.0'
+  version: 'v2.4.3'
   values:
     exporter:
       config:
@@ -55,10 +55,10 @@ dependencies:
   values:
     image:
       repo: 'parity/polkadot'
-      tag: 'v0.8.23'
-  version: 'v0.33.0'
+      tag: 'v0.8.27'
+  version: 'v0.34.1'
 - chart: w3f/polkadot-base-services
-  version: 'v0.33.0'
+  version: 'v0.34.1'
 `;
 
 let result: object;
