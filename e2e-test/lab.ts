@@ -55,7 +55,7 @@ dependencies:
   values:
     image:
       repo: 'parity/polkadot'
-      tag: 'v0.8.29'
+      tag: 'v0.8.27'
   version: 'v0.34.1'
 - chart: w3f/polkadot-base-services
   version: 'v0.34.1'
